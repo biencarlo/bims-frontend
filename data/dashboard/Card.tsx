@@ -8,6 +8,10 @@ const Cards = [
   {
     name: "Health Center Refferals",
   },
+  {
+    name: "Residents Registered",
+  },
+  
 ];
 
 export default Cards;

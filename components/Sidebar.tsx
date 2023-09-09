@@ -2,6 +2,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useSelectedLayoutSegment } from "next/navigation";
+import { LayoutDashboard } from "lucide-react"
+import layout from "@/app/dashboard/layout";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -11,6 +13,7 @@ export default function Sidebar() {
   const segment = useSelectedLayoutSegment();
   const sidebarOptions = [
     {
+      icon: 'LayoutDashboard',
       name: "Dashboard",
       href: "/dashboard",
       current: !segment,
