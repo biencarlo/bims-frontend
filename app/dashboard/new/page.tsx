@@ -1,4 +1,7 @@
-import React from "react";
+import Typography from '@mui/material/Typography';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import Link from '@mui/material/Link';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 interface FormFieldProps {
   label: string;
@@ -31,7 +34,23 @@ const FormField: React.FC<FormFieldProps> = ({
 const New = () => {
   return (
     <div className="px-8 py-4 w-full">
-      <h1 className="text-3xl font-bold">Create Document</h1>
+      <h1 className="text-4xl font-black pt-4 text-red-900 tracking-[-0.5px] ">Create Document</h1>
+      <Breadcrumbs aria-label="breadcrumb" separator={<NavigateNextIcon fontSize="small" />}>
+        <Link
+          underline="hover"
+          sx={{ display: 'flex', alignItems: 'center' }}
+          color="inherit"
+          href="/dashboard"
+        >
+          Dashboard
+        </Link>
+        <Typography
+          sx={{ display: 'flex', alignItems: 'center' }}
+          color="text.primary"
+        >
+          New
+        </Typography>
+      </Breadcrumbs>
 
       <form className="flex flex-col my-4 gap-2">
         <label htmlFor="docuTitle">Document Title</label>

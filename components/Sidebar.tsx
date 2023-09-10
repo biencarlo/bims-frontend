@@ -2,8 +2,9 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useSelectedLayoutSegment } from "next/navigation";
-import { LayoutDashboard } from "lucide-react"
+import { LayoutGrid, FilePlus, FileText, MapPin, Syringe, List, User} from "lucide-react";
 import layout from "@/app/dashboard/layout";
+import SidebarItems from "./SidebarItems";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -13,35 +14,54 @@ export default function Sidebar() {
   const segment = useSelectedLayoutSegment();
   const sidebarOptions = [
     {
-      icon: 'LayoutDashboard',
+      icon: <LayoutGrid />,
       name: "Dashboard",
       href: "/dashboard",
       current: !segment,
       border: true,
-      parent: "Menu",
+      parent: "MENU",
     },
     {
+      icon: <FilePlus />,
       name: "New",
       href: "/dashboard/new",
       current: `/${segment}` === "/new",
       border: true,
     },
     {
-      name: "Clerances",
+      icon: <FileText />,
+      name: "Clearances",
       href: "/dashboard/clearances",
       current: `/${segment}` === "/clearances",
     },
     {
+      icon: <MapPin />,
       name: "Indigencies",
       href: "/dashboard/indigencies",
       current: `/${segment}` === "/indigencies",
       border: true,
     },
     {
+      icon: <Syringe />,
       name: "HC Referrals",
       href: "/dashboard/hc-referrals",
-      current: `/${segment}` === "/hc-refferals",
-      parent: "Brgy Health Center",
+      current: `/${segment}` === "/hc-referrals",
+      parent: "BRGY HEALTH CENTER",
+      border: true
+    },
+    {
+      icon: <List />,
+      name: "Residents List",
+      href: "/dashboard/residents-list",
+      current: `/${segment}` === "/residents-list",
+      
+    },
+    {
+      icon: <User />,
+      name: "User List",
+      href: "/dashboard/user-list",
+      current: `/${segment}` === "/user-list",
+      
     },
   ];
   return (
@@ -56,34 +76,8 @@ export default function Sidebar() {
 
         <nav className="flex flex-1 flex-col">
           <ul role="list" className="flex flex-1 flex-col gap-y-2">
-            {sidebarOptions.map((option) => (
-              <li key={option.name}>
-                <h1
-                  className={`${
-                    option.parent ? "block" : "hidden"
-                  } text-sm text-white pl-6 pb-2 ${
-                    option.parent === "Brgy Health Center" ? "pt-3" : ""
-                  }`}
-                >
-                  {option.parent}
-                </h1>
-                <ul role="list" className="-mx-2 space-y-4">
-                  <li
-                    className={`rounded-md py-2 px-2
-              ${
-                option.current
-                  ? "bg-[#ffbbbb] text-[#5a0000]"
-                  : "text-white hover:text-white hover:bg-[#bc6666]"
-              }
-            `}
-                  >
-                    <Link href={option.href}>{option.name}</Link>
-                  </li>
-                  {/* Add the border div here */}
-                  {option.border && <div className="border-b-2"></div>}
-                </ul>
-              </li>
-            ))}
+            {sidebarOptions.map((option) => <SidebarItems option={option}>
+            </SidebarItems>)}
           </ul>
         </nav>
 
