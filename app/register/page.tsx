@@ -10,11 +10,14 @@ export default function Register(){
             setToken(res.data);
         });
     }, []);
+
     const [token, setToken] = useState<string>();
-    console.log('first load', token);
+
+    // function to handle on submit 
     const handleSubmit = (e : React.SyntheticEvent)=>{
         e.preventDefault();
         
+        // kinukuha  mga input fields
         const target = e.target as typeof e.target & {
           first_name: { value: string };
           middle_name: { value: string };
@@ -25,8 +28,7 @@ export default function Register(){
           password_confirmation: { value: string };
         };
         
-
-        console.log('token >>', token);
+        // sinesend sa server
         axios.post('http://127.0.0.1:8000/register', {
                 first_name: target.first_name.value,
                 middle_name: target.middle_name.value,
@@ -35,12 +37,15 @@ export default function Register(){
                 email: target.email.value,
                 password: target.password.value,
                 password_confirmation: target.password_confirmation.value,
-            }, {
+            },
+             {
                 headers: {
                     'X-CSRF-TOKEN': token
                 }
             });
     }
+
+
     return (
         <>
             <form onSubmit={handleSubmit}>
