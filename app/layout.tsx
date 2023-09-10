@@ -1,8 +1,8 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Sen } from "next/font/google";
+import { Mulish } from "next/font/google";
 
-const font = Sen({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"] });
+const font = Mulish({ subsets: ["latin"], weight: ['300','400','500','600','700','800'] });
 
 export const metadata: Metadata = {
   title: "Barangay Batis Information Management System",

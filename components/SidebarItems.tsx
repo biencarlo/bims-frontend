@@ -19,7 +19,7 @@ export default function SidebarItems({ option }) {
     ${
       option.current
         ? "bg-[#ffbbbb] text-[#5a0000] font-black transition-all"
-        : "text-white hover:text-white hover:bg-[#bc6666]"
+        : "text-white hover:text-white hover:bg-[#bc6666] hover:font-black transition-all "
     }
   `}
           >

@@ -6,7 +6,7 @@ const Cards = [
     name: "Barangay Indigencies",
   },
   {
-    name: "Health Center Refferals",
+    name: "Health Center Referrals",
   },
   {
     name: "Residents Registered",
