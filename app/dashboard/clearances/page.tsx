@@ -13,7 +13,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table"
-import { ArrowUpDown, ChevronDown, MoreHorizontal, Search} from "lucide-react"
+import { ArrowUpDown, ChevronDown, MoreHorizontal, ChevronRight} from "lucide-react"
  
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -185,7 +185,7 @@ export const columns: ColumnDef<Payment>[] = [
   },
 ]
 
-export default function Clerances() {
+export default function Clearances() {
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -214,7 +214,7 @@ export default function Clerances() {
   })
  
   return (
-    <div className="w-full">
+    <div className="p-10 w-full">
       <div className="flex items-center py-4">
         <Input
           placeholder="Filter emails..."
@@ -225,7 +225,7 @@ export default function Clerances() {
           className="max-w-sm"
         />
          <Button variant="outline" size="icon">
-      <Search className="h-4 w-4" />
+      <ChevronRight className="h-4 w-4" />
     </Button>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

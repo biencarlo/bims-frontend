@@ -21,7 +21,7 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <h1 className="text-3xl font-bold my-6">Dashboard</h1>
+      <h1 className="text-4xl font-bold my-6">Dashboard</h1>
 
       <div className="flex gap-10">
         {Cards.map((card) => (
