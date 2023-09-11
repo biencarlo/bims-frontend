@@ -36,6 +36,10 @@ const formtypes = [
   },
 ];
 
+const handleSubmit = async (e :React.FormEvent)=>{
+  e.preventDefault();
+  console.log(e.target)
+}
 
 
 export default function layout({ children }: Props) {
@@ -74,7 +78,7 @@ export default function layout({ children }: Props) {
         noValidate
         autoComplete="off"
       >
-        <form>
+        <form id="form" onSubmit={handleSubmit}>
           <div className="w-full flex place-content-stretch mt-4">
             <TextField
               onChange={handleChange}
@@ -104,6 +108,7 @@ export default function layout({ children }: Props) {
             </Button>
             <Button
               size="large"
+              type="submit"
               variant="outlined"
               sx={{ height: 55, width: "300px" }}
               className="mt-4 py-2 px-10 hover:bg-red-800 hover:border-transparent hover:text-white rounded-sm transition-all "
@@ -111,11 +116,11 @@ export default function layout({ children }: Props) {
               Create Document
             </Button>
           </div>
-          </form>
           <div>
             {children}
 
           </div>
+          </form>
           </Box>
           </div>
 
