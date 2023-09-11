@@ -3,6 +3,23 @@ import TextField from "@mui/material/TextField";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
+import MenuItem from "@mui/material/MenuItem";
+import Box from "@mui/material/Box";
+
+const formtypes = [
+  {
+    value: "Barangay Clearance",
+    label: "Barangay Clearance",
+  },
+  {
+    value: "Barangay Indigency",
+    label: "Barangay Indigency",
+  },
+  {
+    value: "Health Center Referral",
+    label: "Health Center Referral",
+  },
+];
 
 function page() {
   return (
@@ -26,31 +43,43 @@ function page() {
           New
         </Typography>
       </Breadcrumbs>
-      <div>
-        <form noValidate autoComplete="off" width="100%">
+      <Box
+        component="form"
+        sx={{
+          "& .MuiTextField-root": { mr: 2, width: "25ch" },
+        }}
+        noValidate
+        autoComplete="off"
+      >
+        <div>
+          <TextField
+            id="select-form-type"
+            select
+            label="Select"
+            defaultValue="Health Center Referral"
+            helperText="Please select form type"
+          />
+          {formtypes.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
           <TextField
             id="last-name"
             label="Last Name"
             margin="normal"
-            style = {{width: "40%"}}
-            variant = "filled"
+            style={{ width: "40%" }}
+            variant="filled"
           />
           <TextField
             id="last-name"
             label="Last Name"
             margin="normal"
-            style = {{width: "40%"}}
-            variant = "filled"
+            style={{ width: "40%" }}
+            variant="filled"
           />
-                    <TextField
-            id="last-name"
-            label="Last Name"
-            margin="normal"
-            style = {{width: "40%"}}
-            variant = "filled"
-          />
-        </form>
-      </div>
+        </div>
+      </Box>
     </div>
   );
 }
