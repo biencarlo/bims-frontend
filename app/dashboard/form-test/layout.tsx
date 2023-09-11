@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from "react";
 import TextField from "@mui/material/TextField";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
@@ -7,7 +9,9 @@ import MenuItem from "@mui/material/MenuItem";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import CenterFocusStrong from "@mui/icons-material/CenterFocusStrong";
+import { useRouter } from 'next/navigation'
 import "./styles.css";
+
 
 type Props = {
   children: React.ReactNode;
@@ -15,35 +19,33 @@ type Props = {
 
 const formtypes = [
   {
-    value: "Barangay Clearance",
+    value: "clearance",
     label: "Barangay Clearance",
-    url: "clearance",
   },
   {
-    value: "Barangay Indigency",
+    value: "indigency",
     label: "Barangay Indigency",
-    url:"indigency",
   },
   {
-    value: "Health Center Referral",
+    value: "referrals",
     label: "Health Center Referral",
-    url: "referrals",
   },
   {
-    value: "Residence",
+    value: "residence",
     label: "Residence",
-    url: "residence"
   },
 ];
 
 
- const handleChange= ()=>{}
+
 export default function layout({ children }: Props) {
-  return (
-
-
-
-    
+  const router = useRouter();
+  const [hover, setHover] = React.useState('black');
+  const handleChange= (e: React.SyntheticEvent)=>{
+    router.replace(e.target.value);
+    console.log(e.target.value)
+  }
+  return (  
 <div className="px-8 py-4">
       <h1 className="text-4xl font-black pt-4 text-red-900 tracking-[-0.5px] ">
         Create New Entry
@@ -72,14 +74,14 @@ export default function layout({ children }: Props) {
         noValidate
         autoComplete="off"
       >
-        <div>
+        <form>
           <div className="w-full flex place-content-stretch mt-4">
             <TextField
               onChange={handleChange}
               id="select-form-type"
               select
               label="Form Type"
-              defaultValue="Health Center Referral"
+              defaultValue="referrals"
               helperText="Please select form type"
               margin="normal"
               style={{ width: "100%" }}
@@ -93,7 +95,7 @@ export default function layout({ children }: Props) {
             </TextField>
             <Button
               size="large"
-              startIcon={<CenterFocusStrong sx={{ color: "black" }} />}
+              startIcon={<CenterFocusStrong sx={{ color: {hover} }} />}
               variant="outlined"
               sx={{ height: 55, width: "600px" }}
               className="red-button mt-4 mr-5 py-2 px-10 hover:bg-red-800 hover:border-transparent rounded-sm transition-all "
@@ -104,12 +106,12 @@ export default function layout({ children }: Props) {
               size="large"
               variant="outlined"
               sx={{ height: 55, width: "300px" }}
-              className="mt-4 py-2 px-10 hover:bg-red-800 hover:border-transparent rounded-sm transition-all "
+              className="mt-4 py-2 px-10 hover:bg-red-800 hover:border-transparent hover:text-white rounded-sm transition-all "
             >
               Create Document
             </Button>
           </div>
-          </div>
+          </form>
           <div>
             {children}
 
