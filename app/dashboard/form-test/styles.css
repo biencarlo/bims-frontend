@@ -1,0 +1,11 @@
+.red-button:hover {
+  background-color: #7f1d1d !important;
+  color: #ffffff !important;
+  border: transparent transition all;
+}
+
+.red-button {
+  border: grey 1px solid;
+  color: black;
+  border: transparent transition all;
+}
