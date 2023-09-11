@@ -1,7 +1,7 @@
-import Typography from '@mui/material/Typography';
-import Breadcrumbs from '@mui/material/Breadcrumbs';
-import Link from '@mui/material/Link';
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import Typography from "@mui/material/Typography";
+import Breadcrumbs from "@mui/material/Breadcrumbs";
+import Link from "@mui/material/Link";
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 
 interface FormFieldProps {
   label: string;
@@ -34,18 +34,23 @@ const FormField: React.FC<FormFieldProps> = ({
 const New = () => {
   return (
     <div className="px-8 py-4 w-full">
-      <h1 className="text-4xl font-black pt-4 text-red-900 tracking-[-0.5px] ">Create Document</h1>
-      <Breadcrumbs aria-label="breadcrumb" separator={<NavigateNextIcon fontSize="small" />}>
+      <h1 className="text-4xl font-black pt-4 text-red-900 tracking-[-0.5px] ">
+        Create Document
+      </h1>
+      <Breadcrumbs
+        aria-label="breadcrumb"
+        separator={<NavigateNextIcon fontSize="small" />}
+      >
         <Link
           underline="hover"
-          sx={{ display: 'flex', alignItems: 'center' }}
+          sx={{ display: "flex", alignItems: "center" }}
           color="inherit"
           href="/dashboard"
         >
           Dashboard
         </Link>
         <Typography
-          sx={{ display: 'flex', alignItems: 'center' }}
+          sx={{ display: "flex", alignItems: "center" }}
           color="text.primary"
         >
           New
@@ -98,7 +103,7 @@ const New = () => {
 
               <div className="flex gap-4 my-4">
                 <button className="py-2 px-10 bg-red-800 rounded-lg ">
-                  User OCR
+                  Use OCR
                 </button>
                 <button className="py-2 px-4 grow rounded-lg bg-white">
                   Create Document

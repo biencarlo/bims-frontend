@@ -15,7 +15,7 @@ export default function Dashboard() {
         </div>
         <div className="items-center pl-6">
           <div>
-            <p className="text-[10pt] font-medium pt-2 tracking-[2px]">
+            <p className="text-[10pt] font-medium pt-1 tracking-[2px]">
               BARANGAY BATIS, SAN JUAN CITY
             </p>
           </div>

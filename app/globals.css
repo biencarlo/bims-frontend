@@ -83,11 +83,11 @@
 
 *::-webkit-scrollbar
 {
-	width: 4px;
+	width: 11px;
 	background-color: #F5F5F5;
 }
 
 *::-webkit-scrollbar-thumb
 {
-	background-color: #6a6a6a;
+	background-color: #9a9a9a;
 }
