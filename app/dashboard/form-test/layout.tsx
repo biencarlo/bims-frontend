@@ -30,10 +30,6 @@ const formtypes = [
     value: "referrals",
     label: "Health Center Referral",
   },
-  {
-    value: "residence",
-    label: "Residence",
-  },
 ];
 
 const handleSubmit = async (e :React.FormEvent)=>{
@@ -90,6 +86,7 @@ export default function layout({ children }: Props) {
               margin="normal"
               style={{ width: "100%" }}
               required
+              variant="filled"
             >
               {formtypes.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
