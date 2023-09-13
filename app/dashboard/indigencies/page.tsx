@@ -2,6 +2,7 @@ import Typography from '@mui/material/Typography';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from '@mui/material/Link';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import { Button } from '@/components/ui/button';
 
 export default function Indigencies() {
   return(
@@ -23,6 +24,7 @@ export default function Indigencies() {
           Indigencies
         </Typography>
       </Breadcrumbs>
+
     </div>
   )
 }
