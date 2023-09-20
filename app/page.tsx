@@ -1,18 +1,22 @@
 "use client";
 import {
   BrowserRouter as Router,
-  Switch,
+  Routes,
   Route,
-  Redirect,
+  Navigate,
 } from "react-router-dom";
 import Dashboard from ".//dashboard/page";
+import Login from ".//login/page";
 export default function Home() {
+  const isBrowser = typeof window !== 'undefined';
+
   return (
     <Router>
-      <Switch>
-        <Route path="/dashboard" component={Dashboard} />
-        <Redirect from="/" to="/dashboard" />
-      </Switch>
+      <Routes>
+        <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="/login" element={<Login/>} />
+        <Route path="/dashboard" element={<Dashboard/>} />
+      </Routes>
     </Router>
   );
 }

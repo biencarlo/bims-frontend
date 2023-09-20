@@ -9,3 +9,35 @@
   color: black;
   border: transparent transition all;
 }
+
+input:disabled {
+  background-color: #f0f0f0;
+  color: rgb(66, 66, 66);
+  cursor: not-allowed;
+  caret-color: transparent;
+}
+textarea:disabled{
+  background-color: #f0f0f0;
+  color: rgb(66, 66, 66);
+  cursor: not-allowed;
+  caret-color: transparent;
+}
+select:disabled{
+  background-color: #f0f0f0;
+  color: rgb(66, 66, 66);
+  cursor: not-allowed;
+  caret-color: transparent;
+}
+
+.ocr-btn{
+  color:white;
+}
+
+.select-file{
+  display: inline-block;
+  background-color: transparent; 
+  color: black;
+  border: 2px solid black; 
+  border-radius: 5px; 
+  cursor: pointer;
+}
