@@ -10,6 +10,7 @@ import {
   Cross,
   List,
   User,
+  SettingsIcon,
 } from "lucide-react";
 import layout from "@/app/dashboard/layout";
 import SidebarItems from "./SidebarItems";
@@ -20,6 +21,25 @@ function classNames(...classes: string[]) {
 }
 
 export default function Sidebar() {
+
+  const handleSettings = () => {
+    // Your custom logic here
+    console.log('Settings Icon Clicked');
+  };
+
+  const handleSignOut = () =>{
+    console.log('SignOut');
+    sessionStorage.removeItem('ID');
+    sessionStorage.removeItem('fullName');
+    sessionStorage.removeItem('isAdmin');
+    sessionStorage.removeItem('profileLink');
+    window.location.href = '/';
+  }
+
+  const handleUserProfilePicture = () =>{
+    console.log("handleProfilePicture");
+  }
+
   const segment = useSelectedLayoutSegment();
   const sidebarOptions = [
     {
@@ -88,13 +108,22 @@ export default function Sidebar() {
         </nav>
 
         <div className="flex items-center gap-4 px-5">
-          <div className="aspect-square bg-black w-10 rounded-full"></div>
-          <h1>Admin</h1>
+          <div className="aspect-square bg-white w-10 rounded-full" style={{ position: 'relative' }} >
+            <img
+              className="rounded-full"
+              src="https://www.pngmart.com/files/22/User-Avatar-Profile-PNG-Isolated-Clipart.png"
+              alt="Description of the image"
+              style={{ objectFit: 'cover', width: '100%', height: '100%', position: 'absolute' }}
+            />
+          </div>
+          <h1 className="pr-10 text-white">Admin</h1>
+          <SettingsIcon  onClick={handleSettings} style={{ cursor: 'pointer', color:'white' }} />
         </div>
 
         <button
           className="text-left py-3 px-4 border border-gray-400 rounded-md text-white hover:bg-[#bc6666] transition-all hover:border-transparent"
           type="button"
+          onClick={handleSignOut}
         >
           <div className="py-15 px-3 flex justify-between">
             <div>

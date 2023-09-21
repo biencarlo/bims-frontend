@@ -78,15 +78,15 @@ const FormFieldSelect: React.FC<FormFieldSelectProps> = ({
   onChange,
 }) => {
   return (
-    <div className={`form-field flex flex-col ${width}`} >
+    <div className={`form-field flex flex-col ${width} `} >
       <label className="pb-1.5" htmlFor={id}>{label}
       {required && <span className="text-red-500"> *</span>}
       </label>
-      <select id={id} name={name} value={value} onChange={onChange} className="p-2 mt-[-2px] rounded-md"
+      <select id={id} name={name} value={value} onChange={onChange} className="p-2 mt-[-2px] rounded-md bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
       { ...(required ? { required: true } : {}) }
       { ...(disabled ? { disabled: true } : {}) }
       >  
-        <option value=""></option>
+        <option selected>Please select one...</option>
         {options.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}
@@ -98,6 +98,7 @@ const FormFieldSelect: React.FC<FormFieldSelectProps> = ({
 };
 
 const New = () => {
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState<string>(''); 
   const [selectedOptionPhil, setSelectedOptionPhil] = useState<string>(''); 
@@ -123,7 +124,7 @@ const New = () => {
       />
       <FontAwesomeIcon
         icon={faCalendar}
-        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 pr-1"
+        className="absolute right-10 top-1/2 transform -translate-y-1/2 text-black pr-1"
       />
     </div>
   );
@@ -183,6 +184,7 @@ const New = () => {
 
   // Define a function to handle the "Create Entry" button click
   const handleCreateEntryClick = () => {
+    
     console.log((document.getElementById('docuTitle') as HTMLInputElement).value);
     console.log((document.getElementById('lastName') as HTMLInputElement).value);
     console.log((document.getElementById('firstName') as HTMLInputElement).value);
@@ -205,8 +207,8 @@ const New = () => {
     console.log(selectedDate);
     const newDate =  selectedDate || new Date();;
     var formatedDate = format(newDate, 'MM/dd/yyyy');
-    console.log(formatedDate);
-
+    console.log(formatedDate); //birthDate
+    //issuingOfficer
 
   };
 
@@ -239,9 +241,9 @@ const New = () => {
         <label htmlFor="docuTitle">Type of Entry 
           <span className="text-red-500"> *</span>
         </label>
-        <div className="flex gap-8 pb-8">
-          <select id="docuTitle" className="rounded-md p-2 mt-[-2px] w-6/12" name="docuTitle" value={selectedOption} onChange={handleSelectChange} required>
-            <option value=""></option>
+        <div className="flex gap-8 pb-4">
+          <select id="docuTitle" className="rounded-md p-2 mt-[-2px] w-6/12 bg-gray-50 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="docuTitle" value={selectedOption} onChange={handleSelectChange} required>
+            <option selected>Please select one...</option>
             <option value="Barangay Indigency">Barangay Indigency</option>
             <option value="Barangay Clearance">Barangay Clearance</option>
             <option value="Referal Slip">Referal Slip</option>
@@ -256,6 +258,7 @@ const New = () => {
           </button>
           <UploadModal isOpen={isModalOpen} onRequestClose={closeModal} />
         </div>
+        <div className="border-t-2 border-black pb-8"></div>
         
         <div className="flex gap-4 pb-4">
           <FormField
@@ -291,9 +294,10 @@ const New = () => {
             id="philHealthCategory"
             name="philHealthCategory"
             options={[
-              { value: 'option1', label: 'Option 1' },
-              { value: 'option2', label: 'Option 2' },
-              { value: 'option3', label: 'Option 3' },
+              { value: 'Dependent', label: 'Dependent' },
+              { value: 'Senior', label: 'Senior' },
+              { value: 'NHTs', label: 'NHTs' },
+              { value: 'APs', label: 'APs' },
             ]}
             value={selectedOptionPhil} // Pass your selected value here
             onChange={handleSelectChangePhil}
@@ -329,7 +333,7 @@ const New = () => {
             required={true}
             width="w-4/12"
           />
-          <div className="flex flex-col w-36 grow">
+          <div className="flex flex-col w-34 grow">
             <label className="pb-1.5" htmlFor="birthDate">Birthdate
               <span className="text-red-500"> *</span>
             </label>
@@ -400,6 +404,7 @@ const New = () => {
             options={[
               { value: 'Married', label: 'Married' },
               { value: 'Single', label: 'Single' },
+              { value: 'Widow', label: 'Widow' },
             ]}
             value={selectedOptionCivilStatus} // Pass your selected value here
             onChange={handleSelectChangeCivilStatus}
