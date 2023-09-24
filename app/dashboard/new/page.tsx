@@ -11,6 +11,7 @@ import { faFile, faCameraAlt, faCalendar } from '@fortawesome/free-solid-svg-ico
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { format } from 'date-fns';
+import axios from "axios";
 
 import "./styles.css";
 import UploadModal from "./modal";
@@ -184,6 +185,21 @@ const New = () => {
 
   // Define a function to handle the "Create Entry" button click
   const handleCreateEntryClick = () => {
+
+    // axios.delete("http://192.168.254.170:8085/users", {
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   data: {
+    //     ID: 1
+    //   }
+    // }) 
+    // .then(function (response) {
+    //   console.log(response)
+    // })
+    // .catch(function (error) {
+    //   console.log(error);
+    // });
     
     console.log((document.getElementById('docuTitle') as HTMLInputElement).value);
     console.log((document.getElementById('lastName') as HTMLInputElement).value);

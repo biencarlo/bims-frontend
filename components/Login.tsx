@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import md5 from 'crypto-js/md5';
+import api_url from "./api_conf";
 
 export default function Login() {
   const [username, setUsername] = useState('');
@@ -12,7 +13,7 @@ export default function Login() {
     // Hash the password using MD5
     const hashedPassword = md5(password).toString();
 
-    const response = await axios.post('http://192.168.254.170:8085/login', {
+    const response = await axios.post(api_url+'login', {
       username,
       password: hashedPassword,
     }, {

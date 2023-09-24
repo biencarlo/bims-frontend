@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export default function SidebarItems({ option }) {
+export default function SidebarItems( {option} : {option:any} ) {
   return (
     <li key={option.name}>
       <p 
