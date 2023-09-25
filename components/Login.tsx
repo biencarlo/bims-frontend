@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import md5 from 'crypto-js/md5';
 import api_url from "./api_conf";
@@ -8,6 +8,19 @@ export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState(null);
+
+  const [UserID, setUserID] = useState('');
+  const [FullName, setFullName] = useState('');
+  const [IsAdmin, setIsAdmin] = useState('');
+  const [ProfileLink, setProfileLink] = useState('');
+
+
+  useEffect(() => {
+    setUserID('');
+    setFullName('');
+    setIsAdmin('');
+    setProfileLink('');
+  }, []);
 
   const handleLogin = async () => {
     // Hash the password using MD5
@@ -29,10 +42,11 @@ export default function Login() {
     console.log(message);
     if (success) {
       // Store user data in session storage
-      sessionStorage.setItem('ID', userData.ID);
-      sessionStorage.setItem('fullName', userData.FullName);
-      sessionStorage.setItem('isAdmin', userData.IsAdmin);
-      sessionStorage.setItem('profileLink', userData.ProfileLink);
+      localStorage.setItem('ID', userData.ID);
+      localStorage.setItem('Username', userData.Username);
+      localStorage.setItem('fullName', userData.FullName);
+      localStorage.setItem('isAdmin', userData.IsAdmin);
+      localStorage.setItem('profileLink', userData.ProfileLink);
       // Redirect to /dashboard (you can add this once you have the navigate component)
       window.location.href = '/dashboard';
       

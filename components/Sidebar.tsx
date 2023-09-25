@@ -25,14 +25,16 @@ export default function Sidebar() {
   const handleSettings = () => {
     // Your custom logic here
     console.log('Settings Icon Clicked');
+    window.location.href = '/dashboard/profile';
   };
 
   const handleSignOut = () =>{
     console.log('SignOut');
-    sessionStorage.removeItem('ID');
-    sessionStorage.removeItem('fullName');
-    sessionStorage.removeItem('isAdmin');
-    sessionStorage.removeItem('profileLink');
+    localStorage.removeItem('ID');
+    localStorage.removeItem('Username');
+    localStorage.removeItem('fullName');
+    localStorage.removeItem('isAdmin');
+    localStorage.removeItem('profileLink');
     window.location.href = '/';
   }
 

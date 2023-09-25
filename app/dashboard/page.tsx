@@ -2,8 +2,34 @@
 import Image from "next/image";
 
 import Cards from "@/data/dashboard/Card";
+import { useEffect, useState } from "react";
 
 export default function Dashboard() {
+
+  const [UserID, setUserID] = useState<string | null>(null);
+  const [FullName, setFullName] = useState<string | null>(null);
+  const [IsAdmin, setIsAdmin] = useState<string | null>(null);
+  const [ProfileLink, setProfileLink] = useState<string | null>(null);
+
+  const [UserName, setUserName] = useState<string | null>(null);
+
+  useEffect(() => {
+    setUserName(localStorage.getItem('Username'));
+    setUserID(localStorage.getItem('ID'));
+    setFullName(localStorage.getItem('fullName'));
+    setIsAdmin(localStorage.getItem('isAdmin'));
+    setProfileLink(localStorage.getItem('profileLink'));
+    CheckIfLoggedIn();
+  }, []);
+
+  function CheckIfLoggedIn() {
+    console.log(localStorage.getItem('ID'));
+    if (localStorage.getItem('ID') == null){
+      window.location.href = '/';
+    }
+  }
+
+  
   return (
     <div className="px-8 py-4">
       <div className="flex bg-blue-950 text-white py-5 px-7 rounded-t-[12px] gap-3">

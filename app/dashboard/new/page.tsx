@@ -4,7 +4,7 @@ import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Link from "@mui/material/Link";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import Tesseract from 'tesseract.js';
-import React, { useState, useEffect , ChangeEvent } from 'react';
+import React, { useState, useEffect , ChangeEvent, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; 
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faFile, faCameraAlt, faCalendar } from '@fortawesome/free-solid-svg-icons';
@@ -15,6 +15,8 @@ import axios from "axios";
 
 import "./styles.css";
 import UploadModal from "./modal";
+import api_url from "@/components/api_conf";
+import { Toast } from 'primereact/toast';
 
 interface FormFieldProps {
   label: string;
@@ -100,6 +102,33 @@ const FormFieldSelect: React.FC<FormFieldSelectProps> = ({
 
 const New = () => {
 
+  const toast = useRef(null);
+
+  const showSuccessFul = () => {
+    toast.current.show({ severity: 'success', summary: 'Success', detail: 'Message Content', life: 3000});
+  };
+
+  const [UserID, setUserID] = useState<string | null>(null);
+  const [FullName, setFullName] = useState<string | null>(null);
+  const [IsAdmin, setIsAdmin] = useState<string | null>(null);
+  const [ProfileLink, setProfileLink] = useState<string | null>(null);
+
+
+  useEffect(() => {
+    setUserID(localStorage.getItem('ID'));
+    setFullName(localStorage.getItem('fullName'));
+    setIsAdmin(localStorage.getItem('isAdmin'));
+    setProfileLink(localStorage.getItem('profileLink'));
+    CheckIfLoggedIn();
+  }, []);
+
+  function CheckIfLoggedIn() {
+    console.log(localStorage.getItem('ID'));
+    if (localStorage.getItem('ID') == null){
+      window.location.href = '/';
+    }
+  }
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState<string>(''); 
   const [selectedOptionPhil, setSelectedOptionPhil] = useState<string>(''); 
@@ -107,6 +136,8 @@ const New = () => {
   const [selectedOptionCivilStatus, setSelectedOptionCivilStatus] = useState<string>(''); 
   const [isTextFieldDisabledPurpose, setTextFieldDisabledPurpose] = useState(false);
   const [isTextFieldDisabledIndigency, setTextFieldDisabledIndigency] = useState(false);
+  
+  const [NewError, setNewError] =  useState<string | null>(null);
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
@@ -125,14 +156,15 @@ const New = () => {
       />
       <FontAwesomeIcon
         icon={faCalendar}
-        className="absolute right-10 top-1/2 transform -translate-y-1/2 text-black pr-1"
+        className="absolute top-1/2 transform -translate-y-1/2 text-black right-px"
+        style={{marginRight:"15px"}}
       />
     </div>
   );
 
   const handleSelectChange = (event: ChangeEvent<HTMLSelectElement>) => {
     setSelectedOption(event.target.value);
-    if (event.target.value === 'Referal Slip') {
+    if (event.target.value === 'Referral Slip') {
       setTextFieldDisabledPurpose(true);
     } else {
       setTextFieldDisabledPurpose(false);
@@ -184,47 +216,123 @@ const New = () => {
   };
 
   // Define a function to handle the "Create Entry" button click
-  const handleCreateEntryClick = () => {
+  const handleCreateEntryClick = async () => {
+    var docuTitle = (document.getElementById('docuTitle') as HTMLInputElement).value;
+    var lastName = (document.getElementById('lastName') as HTMLInputElement).value;
+    var firstName = (document.getElementById('firstName') as HTMLInputElement).value;
+    var middleName = (document.getElementById('middleName') as HTMLInputElement).value;
 
-    // axios.delete("http://192.168.254.170:8085/users", {
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   data: {
-    //     ID: 1
-    //   }
-    // }) 
-    // .then(function (response) {
-    //   console.log(response)
-    // })
-    // .catch(function (error) {
-    //   console.log(error);
-    // });
-    
-    console.log((document.getElementById('docuTitle') as HTMLInputElement).value);
-    console.log((document.getElementById('lastName') as HTMLInputElement).value);
-    console.log((document.getElementById('firstName') as HTMLInputElement).value);
-    console.log((document.getElementById('middleName') as HTMLInputElement).value);
-    console.log((document.getElementById('philHealthNumber') as HTMLInputElement).value);
-    console.log((document.getElementById('philHealthCategory') as HTMLInputElement).value);
-    console.log((document.getElementById('address') as HTMLInputElement).value);
-    console.log((document.getElementById('healthCardGGGNumber') as HTMLInputElement).value);
-    console.log((document.getElementById('telNum') as HTMLInputElement).value);
-    console.log((document.getElementById('birthPlace') as HTMLInputElement).value);
-    console.log((document.getElementById('gender') as HTMLInputElement).value);
-    console.log((document.getElementById('parentName') as HTMLInputElement).value);
-    console.log((document.getElementById('religion') as HTMLInputElement).value);
-    console.log((document.getElementById('occupation') as HTMLInputElement).value);
-    console.log((document.getElementById('civilStatus') as HTMLInputElement).value);
-    console.log((document.getElementById('parentContactNumber') as HTMLInputElement).value);
-    console.log((document.getElementById('purpose') as HTMLInputElement).value);
-    console.log((document.getElementById('reasonForReferral') as HTMLInputElement).value);
-    console.log((document.getElementById('remarks') as HTMLInputElement).value);
-    console.log(selectedDate);
+    var philHealthNumber = (document.getElementById('philHealthNumber') as HTMLInputElement).value;
+    var philHealthCategory = (document.getElementById('philHealthCategory') as HTMLInputElement).value;
+    var address = (document.getElementById('address') as HTMLInputElement).value;
+    var healthCardGGGNumber = (document.getElementById('healthCardGGGNumber') as HTMLInputElement).value;
+    var telNum = (document.getElementById('telNum') as HTMLInputElement).value;
+    var birthPlace = (document.getElementById('birthPlace') as HTMLInputElement).value;
+    var gender = (document.getElementById('gender') as HTMLInputElement).value;
+    var parentName = (document.getElementById('parentName') as HTMLInputElement).value;
+    var religion = (document.getElementById('religion') as HTMLInputElement).value;
+    var occupation = (document.getElementById('occupation') as HTMLInputElement).value;
+    var civilStatus = (document.getElementById('civilStatus') as HTMLInputElement).value;
+    var parentContactNumber = (document.getElementById('parentContactNumber') as HTMLInputElement).value;
+    var purpose = (document.getElementById('purpose') as HTMLInputElement).value;
+    var reasonForReferral = (document.getElementById('reasonForReferral') as HTMLInputElement).value;
+    var remarks = (document.getElementById('remarks') as HTMLInputElement).value;
+
     const newDate =  selectedDate || new Date();;
     var formatedDate = format(newDate, 'MM/dd/yyyy');
-    console.log(formatedDate); //birthDate
-    //issuingOfficer
+
+    var birthDate = formatedDate;
+    var issuingOfficer = localStorage.getItem("fullName");
+
+
+    if (
+      docuTitle === "" ||
+      lastName === "" ||
+      firstName === "" ||
+      middleName === "" ||
+      address === "" ||
+      telNum === "" ||
+      birthPlace === "" ||
+      gender === "" ||
+      parentName === "" ||
+      religion === "" ||
+      occupation === "" ||
+      civilStatus === "" ||
+      parentContactNumber === "" ||
+      birthDate === "" ||
+      issuingOfficer === ""
+    ){
+      setNewError('Please complete the Details before submiting');
+      setTimeout(() => {
+        setNewError(null);
+      }, 3000); 
+      return;
+    }
+    
+
+    await axios.post(api_url+'new', {
+      docuTitle: docuTitle,
+      lastName: lastName,
+      firstName: firstName,
+      middleName: middleName,
+      philHealthNumber: philHealthNumber,
+      philHealthCategory: philHealthCategory,
+      address: address,
+      healthCardGGGNumber: healthCardGGGNumber,
+      telNum: telNum,
+      birthPlace: birthPlace,
+      gender: gender,
+      parentName: parentName,
+      religion: religion,
+      occupation: occupation,
+      civilStatus: civilStatus,
+      parentContactNumber: parentContactNumber,
+      purpose: purpose,
+      reasonForReferral: reasonForReferral,
+      remarks: remarks,
+      birthDate: birthDate,
+      issuingOfficer: issuingOfficer
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }).then(async response => {
+      if (response.data.success){
+        showSuccessFul();
+        
+        setSelectedDate(null);
+        setSelectedOptionCivilStatus('');
+        setSelectedOptionGender('');
+        setSelectedOptionPhil('');
+        setSelectedOption('');
+        (document.getElementById('docuTitle') as HTMLInputElement).value = '';
+        (document.getElementById('lastName') as HTMLInputElement).value = "";
+        (document.getElementById('firstName') as HTMLInputElement).value = "";
+        (document.getElementById('middleName') as HTMLInputElement).value = "";
+        (document.getElementById('philHealthNumber') as HTMLInputElement).value = "";
+        (document.getElementById('philHealthCategory') as HTMLInputElement).value = "";
+        (document.getElementById('address') as HTMLInputElement).value = "";
+        (document.getElementById('healthCardGGGNumber') as HTMLInputElement).value = "";
+        (document.getElementById('telNum') as HTMLInputElement).value = "";
+        (document.getElementById('birthPlace') as HTMLInputElement).value = "";
+        (document.getElementById('gender') as HTMLInputElement).value = "";
+        (document.getElementById('parentName') as HTMLInputElement).value = "";
+        (document.getElementById('religion') as HTMLInputElement).value = "";
+        (document.getElementById('occupation') as HTMLInputElement).value = "";
+        (document.getElementById('civilStatus') as HTMLInputElement).value = "";
+        (document.getElementById('parentContactNumber') as HTMLInputElement).value = "";
+        (document.getElementById('purpose') as HTMLInputElement).value= ""; 
+        (document.getElementById('reasonForReferral') as HTMLInputElement).value= "";
+        (document.getElementById('remarks') as HTMLInputElement).value= "";
+        
+      }else{
+        setNewError(response.data.Message || 'An error occurred');
+        setTimeout(() => {
+          setNewError(null);
+        }, 3000); // 3000 milliseconds = 3 second
+      }
+    });
+
 
   };
 
@@ -253,7 +361,19 @@ const New = () => {
         </Typography>
       </Breadcrumbs>
 
+
       <form className="flex flex-col my-4 gap-2 ">
+      <Toast ref={toast} />
+        {NewError && (
+          <div role="alert" className="login-error">
+            <div className="bg-red-500 text-white font-bold rounded-t px-4 py-2">
+              Error:
+            </div>
+            <div className="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">
+              <p className="error-message">{NewError}</p>
+            </div>
+          </div>
+        )}
         <label htmlFor="docuTitle">Type of Entry 
           <span className="text-red-500"> *</span>
         </label>
@@ -262,7 +382,7 @@ const New = () => {
             <option selected>Please select one...</option>
             <option value="Barangay Indigency">Barangay Indigency</option>
             <option value="Barangay Clearance">Barangay Clearance</option>
-            <option value="Referal Slip">Referal Slip</option>
+            <option value="Referral Slip">Referral Slip</option>
           </select>
           <button type="button" className="py-2 px-6 bg-red-800 rounded-lg ocr-btn">
             <FontAwesomeIcon icon={faCameraAlt as IconProp} className="mr-2" />
@@ -272,7 +392,33 @@ const New = () => {
             <FontAwesomeIcon icon={faFile as IconProp} className="mr-2" />
             Create Entry
           </button>
-          <UploadModal isOpen={isModalOpen} onRequestClose={closeModal} />
+          <UploadModal isOpen={isModalOpen} onRequestClose={closeModal} 
+            selectedOption={selectedOption}
+            selectedOptionPhil={selectedOptionPhil}
+            selectedOptionGender={selectedOptionGender}
+            selectedOptionCivilStatus={selectedOptionCivilStatus}
+            selectedDate={selectedDate}
+            updateSelectedOption={(newValue: string) => {
+              // Update selectedOption state in page.tsx
+              setSelectedOption(newValue);
+            }}
+            updateSelectedOptionPhil={(newValue: string) => {
+              // Update selectedOptionPhil state in page.tsx
+              setSelectedOptionPhil(newValue);
+            }}
+            updateSelectedOptionGender={(newValue: string) => {
+              // Update selectedOptionGender state in page.tsx
+              setSelectedOptionGender(newValue);
+            }}
+            updateSelectedOptionCivilStatus={(newValue: string) => {
+              // Update selectedOptionCivilStatus state in page.tsx
+              setSelectedOptionCivilStatus(newValue);
+            }}
+            updateSelectedDate={(newDate: Date | null) => {
+              // Update selectedDate state in page.tsx
+              setSelectedDate(newDate);
+            }}
+          />
         </div>
         <div className="border-t-2 border-black pb-8"></div>
         
@@ -349,7 +495,7 @@ const New = () => {
             required={true}
             width="w-4/12"
           />
-          <div className="flex flex-col w-34 grow">
+          <div className="flex flex-col">
             <label className="pb-1.5" htmlFor="birthDate">Birthdate
               <span className="text-red-500"> *</span>
             </label>
