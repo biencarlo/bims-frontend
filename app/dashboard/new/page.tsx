@@ -102,10 +102,10 @@ const FormFieldSelect: React.FC<FormFieldSelectProps> = ({
 
 const New = () => {
 
-  const toast = useRef(null);
+  const toast = useRef<Toast>(null);
 
   const showSuccessFul = () => {
-    toast.current.show({ severity: 'success', summary: 'Success', detail: 'Message Content', life: 3000});
+    toast.current!.show({ severity: 'success', summary: 'Success', detail: 'Message Content', life: 3000});
   };
 
   const [UserID, setUserID] = useState<string | null>(null);
@@ -607,7 +607,7 @@ const New = () => {
               ></textarea>
             </div>
             <div className="flex flex-col">
-            <label htmlFor="remarks">Reason for Referral:</label>
+            <label htmlFor="remarks">Remarks:</label>
               <textarea
                 className="rounded-md"
                 name="remarks"

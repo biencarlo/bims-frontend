@@ -30,14 +30,26 @@ interface Option {
   Description: string;
 }
 
-
+interface User {
+  ID: number;
+  FullName: string;
+  FirstName: string;
+  MiddleName: string;
+  LastName: string;
+  PositionID: number;
+  PositionName: string;
+  Email: string;
+  Username: string;
+  IsAdmin: boolean;
+  ProfileLink: string;
+}
 
 export default function UserList() {
 
-  const toast = useRef(null);
+  const toast = useRef<Toast>(null);
 
   const showSuccessFul = () => {
-    toast.current.show({ severity: 'success', summary: 'Success', detail: 'Message Content', life: 3000});
+    toast.current!.show({ severity: 'success', summary: 'Success', detail: 'Message Content', life: 3000});
   };
 
   
@@ -116,9 +128,9 @@ export default function UserList() {
   };
 
   const [deleteUserDialog, setDeleteUserDialog] = useState(false);
-  const [individualUsers, setindividualUsers] = useState(null);
+  const [individualUsers, setindividualUsers] = useState<User | null>(null);
 
-  const confirmDeleteUser = (individualUsers: React.SetStateAction<null>) => {
+  const confirmDeleteUser = (individualUsers: any) => {
     setindividualUsers(individualUsers);
     console.log(individualUsers);
     setDeleteUserDialog(true);
@@ -234,7 +246,8 @@ export default function UserList() {
   }; 
 
   const DeleteUserApi = () =>{
-    var userIDTobeDeleted = individualUsers?.ID;
+    var userIDTobeDeleted = individualUsers!.ID;
+    console.log(individualUsers!.ID);
     axios.delete(api_url+"users", {
       headers: {
         'Content-Type': 'application/json',

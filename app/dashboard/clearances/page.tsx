@@ -31,12 +31,26 @@ import 'primeicons/primeicons.css';
 import { Toast } from 'primereact/toast';
 
 
+interface Clearance {
+  ID: number;
+  ResidentID: number;
+  DateCreated: string;
+  DateUpdated: string;
+  ValidUntil: string;
+  IssuingOfficer: string;
+  Remarks: string;
+  ResidentLastName: string;
+  ResidentFirstName: string;
+  ResidentMiddleName: string;
+  Purpose: string;
+}
+
 export default function Clearances() {
 
-  const toast = useRef(null);
+  const toast = useRef<Toast>(null);
 
   const showSuccessFul = () => {
-    toast.current.show({ severity: 'success', summary: 'Success', detail: 'Message Content', life: 3000});
+    toast.current!.show({ severity: 'success', summary: 'Success', detail: 'Message Content', life: 3000});
   };
 
   const [UserID, setUserID] = useState<string | null>(null);
@@ -85,6 +99,7 @@ export default function Clearances() {
     ResidentMiddleName: '',
     Remarks: '',
     Purpose: '',
+    ResidentID: '',
   });
 
   const resetUpdateForm = () => {
@@ -95,6 +110,7 @@ export default function Clearances() {
       ResidentMiddleName: '',
       Remarks: '',
       Purpose: '',
+      ResidentID: '',
     });
   };
   const handleInputChange = (e: { target: { name: any; value: any; }; }) => {
@@ -139,10 +155,20 @@ const saveAsExcelFile = (buffer: BlobPart, fileName: string) => {
 };
 
   
-  const [individualResidents, setindividualResidents] = useState(null);
+  const [individualResidents, setindividualResidents] = useState<Clearance | null>(null);
   const [deleteResidentDialog, setDeleteResidentDialog] = useState(false);
 
-  const confirmDeleteResident = (individualResidents: React.SetStateAction<null>) => {
+  const printRowData = (individualResidents: any) => {
+    setindividualResidents(individualResidents);
+    console.log(individualResidents);
+    var printDocumentURL =  api_url+"clearances/"+individualResidents.ResidentID+"/"+individualResidents.ID +
+    "/clearances_"+individualResidents.ResidentID+"_"+individualResidents.ID+".pdf"
+    console.log(printDocumentURL);
+    window.location.href = printDocumentURL;
+  };
+
+
+  const confirmDeleteResident = (individualResidents: any) => {
     setindividualResidents(individualResidents);
     console.log(individualResidents);
     setDeleteResidentDialog(true);
@@ -153,7 +179,7 @@ const saveAsExcelFile = (buffer: BlobPart, fileName: string) => {
   };
 
   const DeleteResidentApi = () =>{
-    var userIDTobeDeleted = individualResidents?.ID;
+    var userIDTobeDeleted = individualResidents!.ID;
     axios.delete(api_url+"clearance", {
       headers: {
         'Content-Type': 'application/json',
@@ -205,6 +231,7 @@ const saveAsExcelFile = (buffer: BlobPart, fileName: string) => {
       ResidentLastName: individualResident.ResidentLastName,
       ResidentFirstName: individualResident.ResidentFirstName,
       ResidentMiddleName: individualResident.ResidentMiddleName,
+      ResidentID: individualResident.ResidentID,
     });
   
 
@@ -223,6 +250,8 @@ const saveAsExcelFile = (buffer: BlobPart, fileName: string) => {
           ) : (
             <Button icon="pi pi-trash" rounded outlined severity="danger" onClick={() => confirmDeleteResident(rowData)} />
           )}
+          
+          <Button icon="pi pi-print" rounded outlined severity="info" onClick={() => printRowData(rowData)} />
         </React.Fragment>
     );
   };
@@ -235,6 +264,7 @@ const saveAsExcelFile = (buffer: BlobPart, fileName: string) => {
         ResidentMiddleName: UpdateformData.ResidentMiddleName,
         Purpose: UpdateformData.Purpose,
         Remarks: UpdateformData.Remarks,
+        ResidentID: parseInt(UpdateformData.ResidentID),
       }, {
         headers: {
           'Content-Type': 'application/json',
@@ -327,7 +357,7 @@ const saveAsExcelFile = (buffer: BlobPart, fileName: string) => {
           </Dialog>
 
           <div className="card flex justify-content-center">
-              <Dialog header="Update Resident" visible={visible} style={{ width: '50vw' }} 
+              <Dialog header="Update Clearance" visible={visible} style={{ width: '50vw' }} 
               onHide={() => {
                 setVisible(false);
                 resetUpdateForm(); 

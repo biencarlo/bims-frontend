@@ -30,11 +30,25 @@ import { Button } from "primereact/button";
 import 'primeicons/primeicons.css';
 import { Toast } from 'primereact/toast';
 
+interface Referral {
+  ID: number;
+  ResidentID: number;
+  DateCreated: string;
+  DateUpdated: string;
+  HCGGGNumber: string;
+  PhilHealthID: string;
+  PhilHealthCategory: string;
+  ReasonForReferral: string;
+  ValidUntil: string;
+  IssuingOfficer: string;
+  Remarks: string;
+}
+
 export default function HcReferrals() {
-  const toast = useRef(null);
+  const toast = useRef<Toast>(null);
 
   const showSuccessFul = () => {
-    toast.current.show({ severity: 'success', summary: 'Success', detail: 'Message Content', life: 3000});
+    toast.current!.show({ severity: 'success', summary: 'Success', detail: 'Message Content', life: 3000});
   };
 
   const [selectedOptionCategory, setSelectedOptionCategory] = useState<string>(''); 
@@ -87,6 +101,7 @@ export default function HcReferrals() {
     PhilHealthID: '',
     ReasonForReferral: '',
     Remarks: '',
+    ResidentID: '',
   });
 
   const resetUpdateForm = () => {
@@ -96,6 +111,7 @@ export default function HcReferrals() {
       PhilHealthID: '',
       ReasonForReferral: '',
       Remarks: '',
+      ResidentID: '',
     });
   };
   const handleInputChange = (e: { target: { name: any; value: any; }; }) => {
@@ -140,10 +156,20 @@ const saveAsExcelFile = (buffer: BlobPart, fileName: string) => {
 };
 
   
-  const [individualResidents, setindividualResidents] = useState(null);
+  const [individualResidents, setindividualResidents] = useState<Referral|null>(null);
   const [deleteResidentDialog, setDeleteResidentDialog] = useState(false);
 
-  const confirmDeleteResident = (individualResidents: React.SetStateAction<null>) => {
+
+  const printRowData = (individualResidents: any) => {
+    setindividualResidents(individualResidents);
+    console.log(individualResidents);
+    var printDocumentURL =  api_url+"referrals/"+individualResidents.ResidentID+"/"+individualResidents.ID +
+    "/referrals_"+individualResidents.ResidentID+"_"+individualResidents.ID+".pdf"
+    console.log(printDocumentURL);
+    window.location.href = printDocumentURL;
+  };
+
+  const confirmDeleteResident = (individualResidents: any) => {
     setindividualResidents(individualResidents);
     console.log(individualResidents);
     setDeleteResidentDialog(true);
@@ -154,7 +180,7 @@ const saveAsExcelFile = (buffer: BlobPart, fileName: string) => {
   };
 
   const DeleteResidentApi = () =>{
-    var userIDTobeDeleted = individualResidents?.ID;
+    var userIDTobeDeleted = individualResidents!.ID;
     axios.delete(api_url+"referrals", {
       headers: {
         'Content-Type': 'application/json',
@@ -205,6 +231,7 @@ const saveAsExcelFile = (buffer: BlobPart, fileName: string) => {
       Remarks: individualResident.Remarks,
       HCGGGNumber: individualResident.HCGGGNumber,
       PhilHealthID: individualResident.PhilHealthID,
+      ResidentID: individualResident.ResidentID,
     });
     
     setSelectedOptionCategory(individualResident.PhilHealthCategory);
@@ -224,6 +251,8 @@ const saveAsExcelFile = (buffer: BlobPart, fileName: string) => {
           ) : (
             <Button icon="pi pi-trash" rounded outlined severity="danger" onClick={() => confirmDeleteResident(rowData)} />
           )}
+          
+          <Button icon="pi pi-print" rounded outlined severity="info" onClick={() => printRowData(rowData)} />
         </React.Fragment>
     );
   };
@@ -236,6 +265,7 @@ const saveAsExcelFile = (buffer: BlobPart, fileName: string) => {
         ReasonForReferral: UpdateformData.ReasonForReferral,
         Remarks: UpdateformData.Remarks,
         PhilHealthCategory: selectedOptionCategory,
+        ResidentID: parseInt(UpdateformData.ResidentID),
       }, {
         headers: {
           'Content-Type': 'application/json',
@@ -326,7 +356,7 @@ const saveAsExcelFile = (buffer: BlobPart, fileName: string) => {
           </Dialog>
 
           <div className="card flex justify-content-center">
-              <Dialog header="Update Resident" visible={visible} style={{ width: '50vw' }} 
+              <Dialog header="Update Referrals" visible={visible} style={{ width: '50vw' }} 
               onHide={() => {
                 setVisible(false);
                 resetUpdateForm(); 

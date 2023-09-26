@@ -27,12 +27,32 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { format } from 'date-fns';
 
+interface Resident {
+  ID: number;
+  DateCreated: string;
+  DateUpdated: string;
+  LastName: string;
+  FirstName: string;
+  MiddleName: string;
+  Address: string;
+  BirthDate: string;
+  BirthPlace: string;
+  Gender: string;
+  CivilStatus: string;
+  ContactNumber: string;
+  GuardianName: string;
+  GuardianContactNumbers: string;
+  Religion: string;
+  Occupation: string;
+  IssuingOfficer: string;
+}
+
 export default function ResidentsList() {
 
-  const toast = useRef(null);
+  const toast = useRef<Toast>(null);
 
   const showSuccessFul = () => {
-    toast.current.show({ severity: 'success', summary: 'Success', detail: 'Message Content', life: 3000});
+    toast.current!.show({ severity: 'success', summary: 'Success', detail: 'Message Content', life: 3000});
   };
 
   const [selectedOptionGender, setSelectedOptionGender] = useState<string>(''); 
@@ -191,10 +211,10 @@ const saveAsExcelFile = (buffer: BlobPart, fileName: string) => {
 };
 
   
-  const [individualResidents, setindividualResidents] = useState(null);
+  const [individualResidents, setindividualResidents] = useState<Resident | null>(null);
   const [deleteResidentDialog, setDeleteResidentDialog] = useState(false);
 
-  const confirmDeleteResident = (individualResidents: React.SetStateAction<null>) => {
+  const confirmDeleteResident = (individualResidents: any) => {
     setindividualResidents(individualResidents);
     console.log(individualResidents);
     setDeleteResidentDialog(true);
@@ -205,7 +225,7 @@ const saveAsExcelFile = (buffer: BlobPart, fileName: string) => {
   };
 
   const DeleteResidentApi = () =>{
-    var userIDTobeDeleted = individualResidents?.ID;
+    var userIDTobeDeleted = individualResidents!.ID;
     axios.delete(api_url+"residents", {
       headers: {
         'Content-Type': 'application/json',

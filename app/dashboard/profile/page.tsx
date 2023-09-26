@@ -19,14 +19,14 @@ import "primereact/resources/themes/lara-light-indigo/theme.css";
 
 export default function Profile() {
 
-    const toast = useRef(null);
+    const toast = useRef<Toast>(null);
 
     const showSuccessFul = () => {
-      toast.current.show({ severity: 'success', summary: 'Success', detail: 'Message Content', life: 3000});
+      toast.current!.show({ severity: 'success', summary: 'Success', detail: 'Message Content', life: 3000});
     };
 
     const showError = (message: string) => {
-        toast.current.show({ severity: 'error', summary: 'Error', detail: message, life: 3000 });
+        toast.current!.show({ severity: 'error', summary: 'Error', detail: message, life: 3000 });
     };
 
     

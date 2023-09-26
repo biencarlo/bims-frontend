@@ -32,11 +32,22 @@ import 'primeicons/primeicons.css';
 import { Toast } from 'primereact/toast';
 
 
+interface Indigency {
+  ID: number;
+  ResidentID: number;
+  DateCreated: string;
+  DateUpdated: string;
+  Reason: string;
+  ValidUntil: string;
+  IssuingOfficer: string;
+  Remarks: string;
+}
+
 export default function Indigencies() {
-  const toast = useRef(null);
+  const toast = useRef<Toast>(null);
 
   const showSuccessFul = () => {
-    toast.current.show({ severity: 'success', summary: 'Success', detail: 'Message Content', life: 3000});
+    toast.current!.show({ severity: 'success', summary: 'Success', detail: 'Message Content', life: 3000});
   };
 
   const [UserID, setUserID] = useState<string | null>(null);
@@ -64,6 +75,7 @@ export default function Indigencies() {
     userID:'0',
     Reason: '',
     Remarks: '',
+    ResidentID: '',
   });
 
   const resetUpdateForm = () => {
@@ -71,6 +83,7 @@ export default function Indigencies() {
       userID: '0',
       Reason: '',
       Remarks: '',
+      ResidentID: '',
     });
   };
   const handleInputChange = (e: { target: { name: any; value: any; }; }) => {
@@ -115,21 +128,31 @@ const saveAsExcelFile = (buffer: BlobPart, fileName: string) => {
 };
 
   
-  const [individualResidents, setindividualResidents] = useState(null);
+  const [individualResidents, setindividualResidents] = useState<Indigency |null>(null);
   const [deleteResidentDialog, setDeleteResidentDialog] = useState(false);
 
-  const confirmDeleteResident = (individualResidents: React.SetStateAction<null>) => {
+  const confirmDeleteResident = (individualResidents: any) => {
     setindividualResidents(individualResidents);
     console.log(individualResidents);
     setDeleteResidentDialog(true);
   };
+
+  const printRowData = (individualResidents: any) => {
+    setindividualResidents(individualResidents);
+    console.log(individualResidents);
+    var printDocumentURL =  api_url+"indigencies/"+individualResidents.ResidentID+"/"+individualResidents.ID +
+    "/indigencies_"+individualResidents.ResidentID+"_"+individualResidents.ID+".pdf"
+    console.log(printDocumentURL);
+    window.location.href = printDocumentURL;
+  };
+
 
   const hideDeleteUserDialog = () => {
     setDeleteResidentDialog(false);
   };
 
   const DeleteResidentApi = () =>{
-    var userIDTobeDeleted = individualResidents?.ID;
+    var userIDTobeDeleted = individualResidents!.ID;
     axios.delete(api_url+"indigencies", {
       headers: {
         'Content-Type': 'application/json',
@@ -178,6 +201,7 @@ const saveAsExcelFile = (buffer: BlobPart, fileName: string) => {
       userID: individualResident.ID,
       Reason: individualResident.Reason,
       Remarks: individualResident.Remarks,
+      ResidentID: individualResident.ResidentID,
     });
 
     console.log(individualResident.ID);
@@ -195,6 +219,8 @@ const saveAsExcelFile = (buffer: BlobPart, fileName: string) => {
           ) : (
             <Button icon="pi pi-trash" rounded outlined severity="danger" onClick={() => confirmDeleteResident(rowData)} />
           )}
+          
+          <Button icon="pi pi-print" rounded outlined severity="info" onClick={() => printRowData(rowData)} />
         </React.Fragment>
     );
   };
@@ -204,6 +230,7 @@ const saveAsExcelFile = (buffer: BlobPart, fileName: string) => {
         ID: parseInt(UpdateformData.userID),
         Reason: UpdateformData.Reason,
         Remarks: UpdateformData.Remarks,
+        ResidentID: parseInt(UpdateformData.ResidentID),
       }, {
         headers: {
           'Content-Type': 'application/json',
@@ -308,7 +335,7 @@ const saveAsExcelFile = (buffer: BlobPart, fileName: string) => {
           </Dialog>
 
           <div className="card flex justify-content-center">
-              <Dialog header="Update Resident" visible={visible} style={{ width: '50vw' }} 
+              <Dialog header="Update Indigency" visible={visible} style={{ width: '50vw' }} 
               onHide={() => {
                 setVisible(false);
                 resetUpdateForm(); 
@@ -338,7 +365,7 @@ const saveAsExcelFile = (buffer: BlobPart, fileName: string) => {
                       ></input>
                     </div>
                     <div className="pb-2 flex flex-col grow">
-                      <label htmlFor="Remarks" className="col-form-label">Birth Place:</label>
+                      <label htmlFor="Remarks" className="col-form-label">Remarks:</label>
                       <input type="text" className="p-2 mt-[-2px] rounded-md border-2 border-grey" id="Remarks" name="Remarks"
                       value={UpdateformData.Remarks}
                       onChange={handleInputChange}
