@@ -15,12 +15,37 @@ import {
 import layout from "@/app/dashboard/layout";
 import SidebarItems from "./SidebarItems";
 import LogoutIcon from '@mui/icons-material/Logout';
+import { useEffect, useState } from "react";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Sidebar() {
+
+  const [UserID, setUserID] = useState<string | null>(null);
+  const [FullName, setFullName] = useState<string | null>(null);
+  const [IsAdmin, setIsAdmin] = useState<string | null>(null);
+  const [ProfileLink, setProfileLink] = useState<string | null>(null);
+
+  const [UserName, setUserName] = useState<string | null>(null);
+
+  useEffect(() => {
+    setUserName(localStorage.getItem('Username'));
+    setUserID(localStorage.getItem('ID'));
+    setFullName(localStorage.getItem('fullName'));
+    setIsAdmin(localStorage.getItem('isAdmin'));
+    setProfileLink(localStorage.getItem('profileLink'));
+    CheckIfLoggedIn();
+  }, []);
+
+
+  function CheckIfLoggedIn() {
+    console.log(localStorage.getItem('ID'));
+    if (localStorage.getItem('ID') == null){
+      window.location.href = '/';
+    }
+  }
 
   const handleSettings = () => {
     // Your custom logic here
@@ -78,9 +103,9 @@ export default function Sidebar() {
     },
     {
       icon: <List />,
-      name: "Residents List",
-      href: "/dashboard/residents-list",
-      current: `/${segment}` === "/residents-list",
+      name: "Requested Documents",
+      href: "/dashboard/residents-requested-documents",
+      current: `/${segment}` === "/residents-requested-documents",
       parent: "      ",
     },
     {
@@ -110,15 +135,9 @@ export default function Sidebar() {
         </nav>
 
         <div className="flex items-center gap-4 px-5">
-          <div className="aspect-square bg-white w-10 rounded-full" style={{ position: 'relative' }} >
-            <img
-              className="rounded-full"
-              src="https://www.pngmart.com/files/22/User-Avatar-Profile-PNG-Isolated-Clipart.png"
-              alt="Description of the image"
-              style={{ objectFit: 'cover', width: '100%', height: '100%', position: 'absolute' }}
-            />
+          <div className="aspect-square bg-black w-10 rounded-full" style={{ position: 'relative' }} >
           </div>
-          <h1 className="pr-10 text-white">Admin</h1>
+          <h1 className="pr-10 text-white">{UserName}</h1>
           <SettingsIcon  onClick={handleSettings} style={{ cursor: 'pointer', color:'white' }} />
         </div>
 

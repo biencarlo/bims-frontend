@@ -45,6 +45,8 @@ interface Resident {
   Religion: string;
   Occupation: string;
   IssuingOfficer: string;
+  DocumentType: string;
+  DocumentID: number;
 }
 
 export default function ResidentsList() {
@@ -226,12 +228,16 @@ const saveAsExcelFile = (buffer: BlobPart, fileName: string) => {
 
   const DeleteResidentApi = () =>{
     var userIDTobeDeleted = individualResidents!.ID;
+    var docID = individualResidents!.DocumentID;
+    var docType = individualResidents!.DocumentType;
     axios.delete(api_url+"residents", {
       headers: {
         'Content-Type': 'application/json',
       },
       data: {
-        ID: userIDTobeDeleted
+        ID: userIDTobeDeleted,
+        DocumentID: docID,
+        DocumentType: docType
       }
     }) 
     .then(async response => {
@@ -365,7 +371,7 @@ const saveAsExcelFile = (buffer: BlobPart, fileName: string) => {
   return (
     <div className="px-8 py-4">
       <h1 className="text-4xl font-black pt-4 text-red-900 tracking-[-0.5px] pb-2 ">
-        Residents List
+        Residents Requested Documents
       </h1>
       <Breadcrumbs aria-label="breadcrumb">
         <Link
@@ -380,7 +386,7 @@ const saveAsExcelFile = (buffer: BlobPart, fileName: string) => {
           sx={{ display: "flex", alignItems: "center" }}
           color="text.primary"
         >
-          Residents List
+          Residents Requested Documents
         </Typography>
       </Breadcrumbs>
 
@@ -410,6 +416,7 @@ const saveAsExcelFile = (buffer: BlobPart, fileName: string) => {
             <Column field="Religion" header="Religion" sortable></Column>
             <Column field="Occupation" header="Occupation" sortable></Column>
             <Column field="IssuingOfficer" header="Issuing Officer" sortable></Column>
+            <Column field="DocumentType" header="DocumentType" sortable></Column>
             <Column body={actionBodyTemplate} exportable={false} style={{ minWidth: '12rem' }}></Column>
           </DataTable>
           

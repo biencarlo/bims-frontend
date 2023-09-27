@@ -235,8 +235,8 @@ export default function Dashboard() {
             <p className="text-md font-medium">Health Center Referrals</p>
           </div>
           <div className="grow py-4 px-4 bg-white rounded-lg" key="Residents Registered">
-            <h1 className="text-3xl font-medium">{DataCounter.Residents}</h1>
-            <p className="text-md font-medium">Residents Registered</p>
+            <h1 className="text-3xl font-medium">{DataCounter.Clearance + DataCounter.Indigencies + DataCounter.Referrals}</h1>
+            <p className="text-md font-medium">Total Documents Requested</p>
           </div>
       </div>
       <div className="card bg-white my-8">

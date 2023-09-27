@@ -377,13 +377,17 @@ export default function UserList() {
                <FontAwesomeIcon icon={faFileExcel as IconProp} className="mr-2"  />
                 Export .xlsx file
               </button>
-              <button type="button" className="py-2 px-10 rounded-lg bg-white " onClick={() => {
-                setVisible(true);
-                setCreateUpdateHeader('Create User');
-              }}>
-              <FontAwesomeIcon icon={faPlusSquare as IconProp} className="mr-2" />
-              Create Entry
-              </button>
+              {IsAdmin=="false" ? (
+              null
+              ) : (
+                <button type="button" className="py-2 px-10 rounded-lg bg-white " onClick={() => {
+                  setVisible(true);
+                  setCreateUpdateHeader('Create User');
+                }}>
+                <FontAwesomeIcon icon={faPlusSquare as IconProp} className="mr-2" />
+                Create Entry
+                </button>
+              )}
               <div className="card flex justify-content-center">
               <Dialog header={CreateUpdateHeader} visible={visible} style={{ width: '50vw' }} 
               onHide={() => {
@@ -471,8 +475,6 @@ export default function UserList() {
             <Column field="PositionName" header="PositionName" sortable ></Column>
             <Column field="Email" header="Email" sortable ></Column>
             <Column field="Username" header="Username" sortable ></Column>
-            <Column field="IsAdmin" header="IsAdmin" sortable ></Column>
-            <Column field="ProfileLink" header="ProfileLink" sortable ></Column>
             {IsAdmin=="false" ? (
               null
             ) : (

@@ -153,12 +153,14 @@ const saveAsExcelFile = (buffer: BlobPart, fileName: string) => {
 
   const DeleteResidentApi = () =>{
     var userIDTobeDeleted = individualResidents!.ID;
+    var ResID = individualResidents!.ResidentID;
     axios.delete(api_url+"indigencies", {
       headers: {
         'Content-Type': 'application/json',
       },
       data: {
-        ID: userIDTobeDeleted
+        ID: userIDTobeDeleted,
+        ResidentID: ResID,
       }
     }) 
     .then(async response => {
