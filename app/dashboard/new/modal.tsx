@@ -84,68 +84,78 @@ const UploadModal: React.FC<UploadModalProps> = ({
         var IsInPurpose = false;
 
 
-        for (var i= 0; i<= lines.length - 1; i++) {
-
-          if(IsInPurpose){
+        for (var i = 0; i <= lines.length - 1; i++) {
+          if (IsInPurpose) {
             Purpose += " " + lines[i];
           }
-
+        
           for (var keyword of keywords) {
             if (lines[i].includes(keyword)) {
+              // Find the position of the keyword within the line
+              var keywordIndex = lines[i].indexOf(keyword);
+        
               // Extract the value following the keyword
-              var value = lines[i].replace(keyword, '').trim();
-              if (keyword == "Last Name"){
-                LastName = value;
-              }
-              if (keyword == "First Name"){
-                FirstName = value;
-              }
-              if (keyword == "Middle Name"){
-                MiddleName = value;
-              }
-              if (keyword == "Type of Document"){
-                docuType = value;
-              }
-              if (keyword == "San Juan City Address"){
-                Address = value;
-              }
-              if (keyword == "Contact No"){
-                var val = value.replace(".", '').trim();
-                var val1 = val.replace(".", '').trim();
-                var val2 = val1.replace(" ", '').trim();
-                ContactNum = val2;
-              }
-              if (keyword == "Birthdate"){
-                var splitBirthday = value.split(" ");
-                Birthdate=splitBirthday[0];
-              }
-              if (keyword == "Birth Place"){
-                BirthPlace = value;
-              }
-              if (keyword == "Gender"){
-                var splitGender= value.split(" ");
-                Gender = splitGender[0];
-              }
-              if (keyword == "Religion"){
-                Religion = value;
-              }
-              if (keyword == "Occupation"){
-                Occupation = value;
-              }
-              if (keyword == "Civil Status"){
-                var splitCivilStatus = value.split(" ");
-                CivilStatus = splitCivilStatus[0];
-              }
-              if (keyword == "Parent/Guardian Name"){
-                parentGuardianName=value;
-                var guardianNumber = lines[i+4].split(" ");
-                parentGuardianNo = guardianNumber[1];
-              }
-              if (keyword == "Parent/Guardian"){
-              }
-              if (keyword == "Purpose"){
-                Purpose = value;
-                IsInPurpose = true;
+              var value = lines[i].substring(keywordIndex + keyword.length).trim();
+        
+              // Update the appropriate variable based on the keyword
+              switch (keyword) {
+                case "Type of Document":
+                  docuType = value;
+                  break;
+                case "Last Name":
+                  LastName = value;
+                  break;
+                case "First Name":
+                  FirstName = value;
+                  break;
+                case "Middle Name":
+                  MiddleName = value;
+                  break;
+                case "San Juan City Address":
+                  Address = value;
+                  break;
+                case "Contact No":
+                  var val = value.replace(".", '').trim();
+                  var val1 = val.replace(".", '').trim();
+                  var val2 = val1.replace(" ", '').trim();
+                  ContactNum = val2;
+                  break;
+                case "Birthdate":
+                  var splitBirthday = value.split(" ");
+                  Birthdate = splitBirthday[0];
+                  break;
+                case "Birth Place":
+                  BirthPlace = value;
+                  break;
+                case "Gender":
+                  var splitGender = value.split(" ");
+                  Gender = splitGender[0];
+                  break;
+                case "Religion":
+                  Religion = value;
+                  break;
+                case "Occupation":
+                  Occupation = value;
+                  break;
+                case "Civil Status":
+                  var splitCivilStatus = value.split(" ");
+                  CivilStatus = splitCivilStatus[0];
+                  break;
+                case "Parent/Guardian Name":
+                  parentGuardianName = value;
+                  var guardianNumber = lines[i + 4].split(" ");
+                  parentGuardianNo = guardianNumber[1];
+                  break;
+                case "Parent/Guardian":
+                  break;
+                case "Purpose":
+                  const cntNum = "Contact No."
+                  var keywordIndexNum = lines[i-1].indexOf(cntNum);
+                  var guardianNum = lines[i-1].substring(keywordIndexNum + cntNum.length).trim();
+                  parentGuardianNo = guardianNum;
+                  Purpose = value;
+                  IsInPurpose = true;
+                  break;
               }
             }
           }
@@ -165,19 +175,49 @@ const UploadModal: React.FC<UploadModalProps> = ({
         console.log(parentGuardianName);
         console.log(parentGuardianNo);
         console.log(Purpose);
+
+
+        var dateObject = null;
+        if (isValidDate(Birthdate)){
+          const dateParts = Birthdate.split("/");
+          const year = parseInt(dateParts[2], 10);
+          const month = parseInt(dateParts[0], 10) - 1; 
+          const day = parseInt(dateParts[1], 10);
+    
+          dateObject = new Date(year, month, day);
+        }
       
-      const dateParts = Birthdate.split("/");
-      const year = parseInt(dateParts[2], 10);
-      const month = parseInt(dateParts[0], 10) - 1; 
-      const day = parseInt(dateParts[1], 10);
 
-      const dateObject = new Date(year, month, day);
 
+      if (Gender.toUpperCase() === "MALE"){
+        Gender = "Male";
+      }else if (Gender.toUpperCase() == "FEMALE"){
+        Gender = "Female";
+      }
+
+      if (CivilStatus.toUpperCase() == "SINGLE"){
+        CivilStatus = "Single";
+      }else if (CivilStatus.toUpperCase() == "MARRIED"){
+        CivilStatus = "Married";
+      }else if (CivilStatus.toUpperCase() == "WIDOW"){
+        CivilStatus = "Widow";
+      }
+
+      if (docuType.toUpperCase() == "BARANGAY INDIGENCY"){
+        docuType = "Barangay Indigency";
+      }else if (docuType.toUpperCase() == "BARANGAY CLEARANCE"){
+        docuType = "Barangay Clearance";
+      }else if (docuType.toUpperCase() == "REFERRAL SLIP"){
+        docuType = "Referral Slip";
+      }
+      
+      
       updateSelectedDate(dateObject);
       updateSelectedOption(docuType);
       updateSelectedOptionCivilStatus(CivilStatus);
       updateSelectedOptionGender(Gender);
       updateSelectedOptionPhil("");
+      
       (document.getElementById('lastName') as HTMLInputElement).value = LastName;
       (document.getElementById('firstName') as HTMLInputElement).value = FirstName;
       (document.getElementById('middleName') as HTMLInputElement).value = MiddleName;
@@ -207,6 +247,27 @@ const UploadModal: React.FC<UploadModalProps> = ({
     // Close the modal
     onRequestClose();
   };
+
+  function isValidDate(dateString: string) {
+    // Define a regular expression pattern to match "mm/dd/yyyy" format
+    var datePattern = /^(0[1-9]|1[0-2])\/(0[1-9]|[1-2][0-9]|3[0-1])\/\d{4}$/;
+  
+    // Test if the input string matches the pattern
+    if (!datePattern.test(dateString)) {
+      return false;
+    }
+  
+    // Attempt to create a Date object from the input string
+    var date = new Date(dateString);
+  
+    // Check if the Date object is valid and its month and day match the input
+    return (
+      !isNaN(date.getTime()) &&
+      date.getDate() == parseInt(dateString.split("/")[1]) &&
+      date.getMonth() + 1 == parseInt(dateString.split("/")[0]) &&
+      date.getFullYear() == parseInt(dateString.split("/")[2])
+    );
+  }
 
   return (
     
