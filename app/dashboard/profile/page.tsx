@@ -79,25 +79,29 @@ export default function Profile() {
 
 
   const handleChangePassword = async () => {
-    var hashedPassword = md5(UpdateformData.currentPassword).toString();
-    var hashedNewPassword =  md5(UpdateformData.newPassword).toString();
-        await axios.post(api_url+'change_password', {
-            Username: UserName,
-            Password: hashedPassword,
-            NewPassword: hashedNewPassword,
-            ID: parseInt(UserID!),
-        }, {
-            headers: {
-            'Content-Type': 'application/json',
-            },
-        }).then(async response => {
-            if (response.data.Successful){
-            showSuccessFul();
-            resetUpdateForm();
-            }else{
-            showError(response.data.Message);
-            }
-        });
+      if (UpdateformData.newPassword == UpdateformData.confimPassword){
+        var hashedPassword = md5(UpdateformData.currentPassword).toString();
+        var hashedNewPassword =  md5(UpdateformData.newPassword).toString();
+            await axios.post(api_url+'change_password', {
+                Username: UserName,
+                Password: hashedPassword,
+                NewPassword: hashedNewPassword,
+                ID: parseInt(UserID!),
+            }, {
+                headers: {
+                'Content-Type': 'application/json',
+                },
+            }).then(async response => {
+                if (response.data.Successful){
+                showSuccessFul();
+                resetUpdateForm();
+                }else{
+                showError(response.data.Message);
+                }
+            });
+      }else{
+        showError("New Password should be the same with the Confirm Password");
+      }
     };
  
   return (

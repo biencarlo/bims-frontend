@@ -467,7 +467,6 @@ export default function UserList() {
           <DataTable filters={filters} value={users} size="small" removableSort stripedRows paginator rows={10} 
           rowsPerPageOptions={[5, 10, 25, 50]} tableStyle={{ minWidth: '50rem' }}>
             <Column field="ID" header="ID" sortable ></Column>
-            <Column field="FullName" header="FullName" sortable ></Column>
             <Column field="FirstName" header="FirstName" sortable ></Column>
             <Column field="MiddleName" header="MiddleName" sortable ></Column>
             <Column field="LastName" header="LastName" sortable ></Column>
