@@ -491,7 +491,7 @@ const saveAsExcelFile = (buffer: BlobPart, fileName: string) => {
 
   const actionStatusTemplate = (rowData: any) => {
 
-      return <Tag value={rowData.DocumentStatus} severity={getSeverity(rowData)}></Tag>;
+      return <Tag value={rowData.DocumentStatus == "Printing" ? "Printted" : rowData.DocumentStatus} severity={getSeverity(rowData)}></Tag>;
   };
 
   const getSeverity = (rowData: any) => {

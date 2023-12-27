@@ -469,13 +469,13 @@ const Dashboard: React.FC = () => {
                       <Chart type="pie" data={chartDatapie} options={chartOptionspie} />
                   </div>
                   <div >
-                    <h1 className="text-5xl font-medium text-red-900">{DataCounterPie.Printting}</h1>
+                    <h1 className="text-5xl font-medium text-red-900">{DataCounterPie.Printted}</h1>
                   </div>
                   <div className="col-start-2">
                     <p className="text-md font-medium w-full">For print records</p>
                   </div>
                   <div className="col-start-2 row-start-3">
-                    <h1 className="text-5xl font-medium text-yellow-900">{DataCounterPie.Printted}</h1>
+                    <h1 className="text-5xl font-medium text-yellow-900">{DataCounterPie.Printting}</h1>
                   </div>
                   <div className="col-start-2 row-start-4">
                     <p className="text-md font-medium w-full">Printed records</p>
