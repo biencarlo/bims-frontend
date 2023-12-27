@@ -310,7 +310,7 @@ const saveAsExcelFile = (buffer: BlobPart, fileName: string) => {
   const [UserError, setUserError] = useState<string | null>(null);
   const [visible, setVisible] = useState(false);
 
-  const footerContent = (
+  const footerContent = isFormDisabled ? null : (
     <div className="flex flex-row justify-end">
         <button type="button" className="py-2 px-10 rounded-lg bg-gray-800 rounded-lg" style={{color:'white'}} onClick={() => setDeleteResidentDialog(true)}>
               <FontAwesomeIcon icon={faArchive as IconProp} className="mr-2" />
@@ -370,7 +370,6 @@ const saveAsExcelFile = (buffer: BlobPart, fileName: string) => {
   };
 
   const onRowView = (individualResident: any) => {
-    setIsFormDisabled(true);
     setindividualResidents({ ...individualResident.data });
     setVisible(true);
     setUpdateFormData({
@@ -473,6 +472,8 @@ const saveAsExcelFile = (buffer: BlobPart, fileName: string) => {
                 Print
           </button>
           <button type="button" className="text-xs py-2 px-5 mr-2 rounded-lg bg-white-800 rounded-lg text-red-800 border-solid border-red-800 border-2" onClick={() => {
+            
+              setIsFormDisabled(true);
               onRowView(rowData);
             }}>
                 <FontAwesomeIcon icon={faFile as IconProp} className="mr-2" />
@@ -490,7 +491,7 @@ const saveAsExcelFile = (buffer: BlobPart, fileName: string) => {
 
   const actionStatusTemplate = (rowData: any) => {
 
-    return <Tag value={rowData.DocumentStatus== "Printing" ? "Printted" : rowData.DocumentStatus} severity={getSeverity(rowData)}></Tag>;
+    return <Tag value={rowData.DocumentStatus== "Printing" ? "Printed" : rowData.DocumentStatus} severity={getSeverity(rowData)}></Tag>;
 };
 
 const getSeverity = (rowData: any) => {

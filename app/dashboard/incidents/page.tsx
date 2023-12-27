@@ -338,7 +338,6 @@ const Incidents: React.FC = () => {
     };
   
     const onRowView = (individualResident: any) => {
-      setIsFormDisabled(true);
       setindividualResidents({ ...individualResident.data });
       setVisible(true);
       setUpdateFormData({
@@ -410,6 +409,8 @@ const Incidents: React.FC = () => {
                   Print
             </button>
             <button type="button" className="text-xs py-2 px-5 mr-2 rounded-lg bg-white-800 rounded-lg text-red-800 border-solid border-red-800 border-2" onClick={() => {
+              
+                setIsFormDisabled(true);
                 onRowView(rowData);
               }}>
                   <FontAwesomeIcon icon={faFile as IconProp} className="mr-2" />
