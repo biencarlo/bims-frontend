@@ -895,7 +895,7 @@ const saveAsExcelFile = (buffer: BlobPart, fileName: string) => {
                     style={{ backgroundColor: getBackgroundColor() }}  
                     disabled={isFormDisabled}>
                         <option value="For Printing">For Printing</option>
-                        <option value="Printing">Printing</option>
+                        <option value="Printing">Printed</option>
                         <option value="Claimed">Claimed</option>
                       </select>
                     </div>
