@@ -11,6 +11,8 @@ import {
   List,
   User,
   SettingsIcon,
+  AlertTriangle,
+  BadgeAlert,
 } from "lucide-react";
 import layout from "@/app/dashboard/layout";
 import SidebarItems from "./SidebarItems";
@@ -102,8 +104,20 @@ export default function Sidebar() {
       parent: "BRGY HEALTH CENTER",
     },
     {
+      icon: <AlertTriangle />,
+      name: "BDRRMC Records",
+      href: "/dashboard/bdrrmc",
+      current: `/${segment}` === "/bdrrmc",
+    },
+    {
+      icon: <BadgeAlert />,
+      name: "Incident Reports",
+      href: "/dashboard/incidents",
+      current: `/${segment}` === "/incidents",
+    },
+    {
       icon: <List />,
-      name: "Requested Documents",
+      name: "Document Logs",
       href: "/dashboard/residents-requested-documents",
       current: `/${segment}` === "/residents-requested-documents",
       parent: "      ",
@@ -115,6 +129,61 @@ export default function Sidebar() {
       current: `/${segment}` === "/user-list",
     },
   ];
+
+  const sidebarOptionsNotAdmin = [
+    {
+      icon: <LayoutGrid />,
+      name: "Dashboard",
+      href: "/dashboard",
+      current: !segment,
+      parent: "MENU",
+    },
+    {
+      icon: <FilePlus />,
+      name: "New",
+      href: "/dashboard/new",
+      current: `/${segment}` === "/new",
+    },
+    {
+      icon: <FileText />,
+      name: "Clearances",
+      href: "/dashboard/clearances",
+      current: `/${segment}` === "/clearances",
+    },
+    {
+      icon: <MapPin />,
+      name: "Indigencies",
+      href: "/dashboard/indigencies",
+      current: `/${segment}` === "/indigencies",
+    },
+    {
+      icon: <Cross />,
+      name: "HC Referrals",
+      href: "/dashboard/hc-referrals",
+      current: `/${segment}` === "/hc-referrals",
+      parent: "BRGY HEALTH CENTER",
+    },
+    {
+      icon: <AlertTriangle />,
+      name: "BDRRMC Records",
+      href: "/dashboard/bdrrmc",
+      current: `/${segment}` === "/bdrrmc",
+    },
+    {
+      icon: <BadgeAlert />,
+      name: "Incident Reports",
+      href: "/dashboard/incidents",
+      current: `/${segment}` === "/incidents",
+    },
+    {
+      icon: <List />,
+      name: "Document Logs",
+      href: "/dashboard/residents-requested-documents",
+      current: `/${segment}` === "/residents-requested-documents",
+      parent: "      ",
+    },
+  ];
+
   return (
     <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-72 lg:flex-col bg-red-900">
       <div className="flex grow flex-col gap-y-5 overflow-y-auto  px-6 pb-4 border-r-2">
@@ -128,15 +197,29 @@ export default function Sidebar() {
 
         <nav className="flex flex-1 flex-col">
           <ul role="list" className="flex flex-1 flex-col gap-y-2">
-            {sidebarOptions.map((option) => (
+            {/* {sidebarOptions.map((option) => (
               <SidebarItems option={option}></SidebarItems>
-            ))}
+            ))} */}
+            {IsAdmin === "true" ? (
+              sidebarOptions.map((option) => (
+                <SidebarItems key={option.href} option={option} />
+              ))
+            ) : (
+              sidebarOptionsNotAdmin.map((option) => (
+                <SidebarItems key={option.href} option={option} />
+              ))
+            )}
           </ul>
         </nav>
 
         <div className="flex items-center gap-4 px-5">
-          <div className="aspect-square bg-black w-10 rounded-full" style={{ position: 'relative' }} >
-          </div>
+        <div className="aspect-square w-10 rounded-full" style={{ position: 'relative' }}>
+          <img
+            src="/sj-logo.png" // Replace with the actual path to your image
+            alt="Default Profile"
+            className="w-full h-full rounded-full object-cover"
+          />
+        </div>
           <h1 className="pr-10 text-white">{UserName}</h1>
           <SettingsIcon  onClick={handleSettings} style={{ cursor: 'pointer', color:'white' }} />
         </div>

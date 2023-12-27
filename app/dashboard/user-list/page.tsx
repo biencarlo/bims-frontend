@@ -14,7 +14,7 @@ import { InputText } from 'primereact/inputtext';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; 
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import {faPlusSquare, faFileExcel, faAdd } from '@fortawesome/free-solid-svg-icons';
+import {faPlusSquare, faFileExcel, faAdd,faTrash,faEdit } from '@fortawesome/free-solid-svg-icons';
 
 
 import { Dialog } from 'primereact/dialog';
@@ -24,6 +24,7 @@ import api_url from "@/components/api_conf";
 import { Button } from "primereact/button";
 import 'primeicons/primeicons.css';
 import { Toast } from 'primereact/toast';
+import withLoading from '../../../components/withLoading';
 
 interface Option {
   ID: number; // Change the type to match your actual data
@@ -44,7 +45,7 @@ interface User {
   ProfileLink: string;
 }
 
-export default function UserList() {
+const UserList: React.FC = () => {
 
   const toast = useRef<Toast>(null);
 
@@ -157,15 +158,22 @@ export default function UserList() {
   const actionBodyTemplate = (rowData: any) => {
     return (
         <React.Fragment>
-            <Button icon="pi pi-pencil" rounded outlined className="mr-2" 
-            onClick={() => {
+            <button type="button" className="text-xs py-2 px-5 mr-2 rounded-lg bg-white-800 rounded-lg text-red-800 border-solid border-red-800 border-2" 
+             onClick={() => {
               editUser(rowData);
               setCreateUpdateHeader('Update User');
-            }}/>
-            <Button icon="pi pi-trash" rounded outlined severity="danger" onClick={() => confirmDeleteUser(rowData)} />
+            }}>
+                <FontAwesomeIcon icon={faEdit as IconProp} className="mr-2" />
+                Edit
+          </button>
+          <button type="button" className="text-xs py-2 px-5 mr-2 rounded-lg bg-red-800 rounded-lg text-white border-solid border-red-800 border-2"  onClick={() => confirmDeleteUser(rowData)}>
+          <FontAwesomeIcon icon={faTrash as IconProp} className="mr-2" />
+                Delete
+          </button>
         </React.Fragment>
     );
   };
+
 
   async function CreateUserAPI(){
     var fname = (document.getElementById("first-name") as HTMLInputElement).value;
@@ -474,11 +482,7 @@ export default function UserList() {
             <Column field="PositionName" header="PositionName" sortable ></Column>
             <Column field="Email" header="Email" sortable ></Column>
             <Column field="Username" header="Username" sortable ></Column>
-            {IsAdmin=="false" ? (
-              null
-            ) : (
-              <Column body={actionBodyTemplate} exportable={false} style={{ minWidth: '12rem' }}></Column>
-            )}
+            <Column body={actionBodyTemplate} exportable={false} style={{ minWidth: '15rem' }}></Column>
           </DataTable>
 
           <Dialog visible={deleteUserDialog} style={{ width: '32rem' }} breakpoints={{ '960px': '75vw', '641px': '90vw' }} header="Confirm" modal footer={deleteUserDialogFooter} onHide={hideDeleteUserDialog}>
@@ -491,7 +495,14 @@ export default function UserList() {
                     )}
                 </div>
           </Dialog>
+
+          <div className="pt-10">
+        <p className="">Build 0.2 Alpha. Developed by PUP-SJ BSIT 4-1 Batch 2023-2024</p>
+      </div>
     </div>
+    
 
   );
 }
+
+export default withLoading(UserList);

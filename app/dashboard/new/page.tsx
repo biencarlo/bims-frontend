@@ -17,6 +17,7 @@ import "./styles.css";
 import UploadModal from "./modal";
 import api_url from "@/components/api_conf";
 import { Toast } from 'primereact/toast';
+import withLoading from '../../../components/withLoading';
 
 interface FormFieldProps {
   label: string;
@@ -99,8 +100,7 @@ const FormFieldSelect: React.FC<FormFieldSelectProps> = ({
     </div>
   );
 };
-
-const New = () => {
+const New: React.FC = () =>{
 
   const toast = useRef<Toast>(null);
 
@@ -137,6 +137,8 @@ const New = () => {
   const [isTextFieldDisabledPurpose, setTextFieldDisabledPurpose] = useState(false);
   const [isTextFieldDisabledIndigency, setTextFieldDisabledIndigency] = useState(false);
   
+  const [isDocumentValidityDisabled, setisDocumentValidityDisabled] = useState(false);
+
   const [NewError, setNewError] =  useState<string | null>(null);
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
@@ -144,6 +146,13 @@ const New = () => {
   const handleDateChange = (date: Date | null) => {
     setSelectedDate(date);
   };
+
+  const [selectedDateValidity, setSelectedDateValidity] = useState<Date | null>(null);
+
+  const handleDateChangeValidity = (date: Date | null) => {
+    setSelectedDateValidity(date);
+  };
+    
     
 
   const CustomInput = ({ value, onClick }: any) => (
@@ -162,20 +171,40 @@ const New = () => {
     </div>
   );
 
+  const CustomInputValidity = ({ value, onClick }: any) => (
+    <div className="relative">
+      <input
+        className="p-2 mt-[-2px] rounded-md pr-12" // Adjust padding as needed
+        value={value}
+        onClick={onClick}
+        readOnly
+      />
+      <FontAwesomeIcon
+        icon={faCalendar}
+        className="absolute top-1/2 transform -translate-y-1/2 text-black right-px"
+        style={{marginRight:"15px"}}
+      />
+    </div>
+  );
+
+
   const handleSelectChange = (event: ChangeEvent<HTMLSelectElement>) => {
     setSelectedOption(event.target.value);
     if (event.target.value === 'Referral Slip') {
       setTextFieldDisabledPurpose(true);
-    } else {
-      setTextFieldDisabledPurpose(false);
-    }
-
-    if (event.target.value == 'Barangay Indigency' || event.target.value === 'Barangay Clearance' ){
-      setTextFieldDisabledIndigency(true);
-    } else {
+      setisDocumentValidityDisabled(true);
       setTextFieldDisabledIndigency(false);
-    }
+    } 
 
+    if (event.target.value == 'Barangay Indigency'){
+      setTextFieldDisabledIndigency(true);
+      setisDocumentValidityDisabled(true);
+    } 
+
+    if (event.target.value === 'Barangay Clearance'){
+      setTextFieldDisabledIndigency(true);
+      setisDocumentValidityDisabled(false);
+    } 
   };
   const handleSelectChangePhil = (event:ChangeEvent<HTMLSelectElement>) =>{
     setSelectedOptionPhil(event.target.value);
@@ -230,19 +259,23 @@ const New = () => {
     var birthPlace = (document.getElementById('birthPlace') as HTMLInputElement).value;
     var gender = (document.getElementById('gender') as HTMLInputElement).value;
     var parentName = (document.getElementById('parentName') as HTMLInputElement).value;
-    var religion = (document.getElementById('religion') as HTMLInputElement).value;
-    var occupation = (document.getElementById('occupation') as HTMLInputElement).value;
     var civilStatus = (document.getElementById('civilStatus') as HTMLInputElement).value;
     var parentContactNumber = (document.getElementById('parentContactNumber') as HTMLInputElement).value;
     var purpose = (document.getElementById('purpose') as HTMLInputElement).value;
     var reasonForReferral = (document.getElementById('reasonForReferral') as HTMLInputElement).value;
     var remarks = (document.getElementById('remarks') as HTMLInputElement).value;
 
+    var cedulaNo = (document.getElementById('cedulaNo') as HTMLInputElement).value;
+    var precintNo = (document.getElementById('precintNo') as HTMLInputElement).value;
+
     const newDate =  selectedDate || new Date();;
     var formatedDate = format(newDate, 'MM/dd/yyyy');
 
     var birthDate = formatedDate;
     var issuingOfficer = localStorage.getItem("fullName");
+
+    const newValidityDate =  selectedDateValidity || new Date();;
+    var formatedDateValidity = format(newValidityDate, 'MM/dd/yyyy');
 
 
     if (
@@ -255,8 +288,6 @@ const New = () => {
       birthPlace === "" ||
       gender === "" ||
       parentName === "" ||
-      religion === "" ||
-      occupation === "" ||
       civilStatus === "" ||
       parentContactNumber === "" ||
       birthDate === "" ||
@@ -283,15 +314,16 @@ const New = () => {
       birthPlace: birthPlace,
       gender: gender,
       parentName: parentName,
-      religion: religion,
-      occupation: occupation,
+      cedulaNo: cedulaNo,
+      precintNo: precintNo,
       civilStatus: civilStatus,
       parentContactNumber: parentContactNumber,
       purpose: purpose,
       reasonForReferral: reasonForReferral,
       remarks: remarks,
       birthDate: birthDate,
-      issuingOfficer: issuingOfficer
+      issuingOfficer: issuingOfficer,
+      validUntil: formatedDateValidity,
     }, {
       headers: {
         'Content-Type': 'application/json',
@@ -305,6 +337,7 @@ const New = () => {
         setSelectedOptionGender('');
         setSelectedOptionPhil('');
         setSelectedOption('');
+        setSelectedDateValidity(null);
         (document.getElementById('docuTitle') as HTMLInputElement).value = '';
         (document.getElementById('lastName') as HTMLInputElement).value = "";
         (document.getElementById('firstName') as HTMLInputElement).value = "";
@@ -317,13 +350,13 @@ const New = () => {
         (document.getElementById('birthPlace') as HTMLInputElement).value = "";
         (document.getElementById('gender') as HTMLInputElement).value = "";
         (document.getElementById('parentName') as HTMLInputElement).value = "";
-        (document.getElementById('religion') as HTMLInputElement).value = "";
-        (document.getElementById('occupation') as HTMLInputElement).value = "";
         (document.getElementById('civilStatus') as HTMLInputElement).value = "";
         (document.getElementById('parentContactNumber') as HTMLInputElement).value = "";
         (document.getElementById('purpose') as HTMLInputElement).value= ""; 
         (document.getElementById('reasonForReferral') as HTMLInputElement).value= "";
         (document.getElementById('remarks') as HTMLInputElement).value= "";
+        (document.getElementById('cedulaNo') as HTMLInputElement).value= "";
+        (document.getElementById('precintNo') as HTMLInputElement).value= "";
         
       }else{
         setNewError(response.data.Message || 'An error occurred');
@@ -544,19 +577,21 @@ const New = () => {
             width="w-4/12"
           />
           <FormField
-            label="Religion"
-            id="religion"
+            label="Cedula No."
+            id="cedulaNo"
             type="text"
-            name="religion"
-            required={true}
+            name="cedulaNo"
+            required={false}
             width="w-36"
+            disabled={isDocumentValidityDisabled}
           />
           <FormField
-            label="Occupation"
-            id="occupation"
+            label="Precinct No."
+            id="precintNo"
             type="text"
-            name="occupation"
-            required={true}
+            name="precintNo"
+            required={false}
+            disabled={isDocumentValidityDisabled}
           />
 
           <FormFieldSelect
@@ -570,7 +605,7 @@ const New = () => {
             ]}
             value={selectedOptionCivilStatus} // Pass your selected value here
             onChange={handleSelectChangeCivilStatus}
-            width="w-2/12"
+            width="w-4/12"
             required={true}
           />
         </div>
@@ -589,9 +624,26 @@ const New = () => {
             id="purpose"
             type="text"
             name="purpose"
-            width="w-7/12"
+            width="w-4/12"
             disabled={isTextFieldDisabledPurpose}
           />
+          <div className="flex flex-col">
+            <label className="pb-1.5" htmlFor="DocumentValidity">(For Brgy. Staff) Document Validity
+            </label>
+              <DatePicker
+                name="DocumentValidity"
+                id="DocumentValidity"
+                selected={selectedDateValidity}
+                onChange={handleDateChangeValidity}
+                dateFormat="MM/dd/yyyy"
+                className="p-2 mt-[-2px] rounded-md"
+                customInput={<CustomInputValidity />}
+                showYearDropdown
+                scrollableYearDropdown
+                yearDropdownItemNumber={50}
+                disabled={isDocumentValidityDisabled}
+              />
+          </div>
         </div>
 
           <div className="flex gap-6">
@@ -618,8 +670,12 @@ const New = () => {
             </div>
           </div>
       </form>
+      <div className="">
+        <p className="">Build 0.2 Alpha. Developed by PUP-SJ BSIT 4-1 Batch 2023-2024</p>
+      </div>
     </div>
+    
   );
 };
 
-export default New;
+export default withLoading(New);

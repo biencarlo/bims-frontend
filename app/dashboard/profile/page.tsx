@@ -15,9 +15,10 @@ import { faLock } from '@fortawesome/free-solid-svg-icons';
 
 import 'primeicons/primeicons.css';
 import "primereact/resources/primereact.min.css";  
-import "primereact/resources/themes/lara-light-indigo/theme.css";   
+import "primereact/resources/themes/lara-light-indigo/theme.css"; 
+import withLoading from '../../../components/withLoading';  
 
-export default function Profile() {
+const Profile: React.FC = () =>{
 
     const toast = useRef<Toast>(null);
 
@@ -137,6 +138,11 @@ export default function Profile() {
 
         <Toast ref={toast} />
         </div>
+        <div className="">
+        <p className="">Build 0.2 Alpha. Developed by PUP-SJ BSIT 4-1 Batch 2023-2024</p>
+      </div>
     </div>
   );
 }
+
+export default withLoading(Profile);

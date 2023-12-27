@@ -22,7 +22,8 @@ export default function Login() {
     setProfileLink('');
   }, []);
 
-  const handleLogin = async () => {
+  const handleLogin = async (e: { preventDefault: () => void; }) => {
+    e.preventDefault();
     // Hash the password using MD5
     const hashedPassword = md5(password).toString();
 
@@ -62,7 +63,7 @@ export default function Login() {
 
   return (
     <div>
-      <form className="flex flex-col gap-4">
+      <form onSubmit={(e) => handleLogin(e)} className="flex flex-col gap-4">
         {loginError && (
           <div role="alert" className="login-error">
             <div className="bg-red-500 text-white font-bold rounded-t px-4 py-2">
@@ -93,8 +94,7 @@ export default function Login() {
         />
         <button
           className="uppercase px-2 py-2 rounded-md bg-red-600 text-white font-medium hover:bg-red-800"
-          type="button"
-          onClick={handleLogin}
+          type="submit"
         >
           Sign In
         </button>

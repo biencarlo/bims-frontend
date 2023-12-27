@@ -58,8 +58,8 @@ const UploadModal: React.FC<UploadModalProps> = ({
           "Birthdate",
           "Birth Place",
           "Gender",
-          "Religion",
-          "Occupation",
+          "Cedula No.",
+          "Precinct No.",
           "Civil Status",
           "Parent/Guardian Name",
           "Parent/Guardian No.",
@@ -75,8 +75,8 @@ const UploadModal: React.FC<UploadModalProps> = ({
         var Birthdate = "";
         var BirthPlace = "";
         var Gender = "";
-        var Religion = "";
-        var Occupation = "";
+        var Cedula = "";
+        var Precint = "";
         var CivilStatus = "";
         var parentGuardianName = "";
         var parentGuardianNo = "";
@@ -131,11 +131,11 @@ const UploadModal: React.FC<UploadModalProps> = ({
                   var splitGender = value.split(" ");
                   Gender = splitGender[0];
                   break;
-                case "Religion":
-                  Religion = value;
+                case "Cedula No.":
+                  Cedula = value;
                   break;
-                case "Occupation":
-                  Occupation = value;
+                case "Precinct No.":
+                  Precint = value;
                   break;
                 case "Civil Status":
                   var splitCivilStatus = value.split(" ");
@@ -169,8 +169,8 @@ const UploadModal: React.FC<UploadModalProps> = ({
         console.log(Birthdate);
         console.log(BirthPlace);
         console.log(Gender);
-        console.log(Religion);
-        console.log(Occupation);
+        console.log(Cedula);
+        console.log(Precint);
         console.log(CivilStatus);
         console.log(parentGuardianName);
         console.log(parentGuardianNo);
@@ -225,8 +225,8 @@ const UploadModal: React.FC<UploadModalProps> = ({
       (document.getElementById('telNum') as HTMLInputElement).value = ContactNum;
       (document.getElementById('birthPlace') as HTMLInputElement).value = BirthPlace;
       (document.getElementById('parentName') as HTMLInputElement).value = parentGuardianName;
-      (document.getElementById('religion') as HTMLInputElement).value = Religion;
-      (document.getElementById('occupation') as HTMLInputElement).value = Occupation;
+      (document.getElementById('cedulaNo') as HTMLInputElement).value = Cedula;
+      (document.getElementById('precintNo') as HTMLInputElement).value = Precint;
       (document.getElementById('parentContactNumber') as HTMLInputElement).value = parentGuardianNo;
       (document.getElementById('purpose') as HTMLInputElement).value= Purpose; 
 

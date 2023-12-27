@@ -5,3 +5,11 @@
     border-radius: 10px;
     margin-bottom: 1rem;
 }
+
+.p-dialog-title{
+    color: rgb(127 29 29);
+}
+
+.p-dialog {
+    background-color: rgb(253 186 116);
+}
