@@ -497,6 +497,8 @@ const saveAsExcelFile = (buffer: BlobPart, fileName: string) => {
 
 
   const editResident = (individualResident: any) => {
+    
+    setIsFormDisabled(false);
     setindividualResidents({ ...individualResident });
     console.log(individualResident);
 

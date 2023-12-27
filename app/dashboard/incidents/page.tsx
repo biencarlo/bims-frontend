@@ -367,6 +367,8 @@ const Incidents: React.FC = () => {
     };
   
     const editResident = (individualResident: any) => {
+      
+      setIsFormDisabled(false);
       setindividualResidents({ ...individualResident });
       console.log(individualResident);
       setVisible(true);
