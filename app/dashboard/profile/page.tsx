@@ -129,7 +129,7 @@ const Profile: React.FC = () =>{
             ></input>
             <button style={{marginTop:"20px"}} type="button" className="py-2 px-10 rounded-lg bg-white " onClick={handleChangePassword}>
             <FontAwesomeIcon icon={faLock as IconProp} className="mr-2" />
-            Create Entry
+            Update Password
           </button>
         </div>
         <div className="pb-2 flex flex-col grow">
