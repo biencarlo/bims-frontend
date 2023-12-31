@@ -35,7 +35,6 @@ export default function page() {
               Information Management System
             </h1>
           </div>
-
           <Login />
         </div>
       </div>

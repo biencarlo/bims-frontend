@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 import layout from "@/app/dashboard/layout";
 import SidebarItems from "./SidebarItems";
-import LogoutIcon from '@mui/icons-material/Logout';
+import LogoutIcon from "@mui/icons-material/Logout";
 import { useEffect, useState } from "react";
 
 function classNames(...classes: string[]) {
@@ -24,7 +24,6 @@ function classNames(...classes: string[]) {
 }
 
 export default function Sidebar() {
-
   const [UserID, setUserID] = useState<string | null>(null);
   const [FullName, setFullName] = useState<string | null>(null);
   const [IsAdmin, setIsAdmin] = useState<string | null>(null);
@@ -33,41 +32,40 @@ export default function Sidebar() {
   const [UserName, setUserName] = useState<string | null>(null);
 
   useEffect(() => {
-    setUserName(localStorage.getItem('Username'));
-    setUserID(localStorage.getItem('ID'));
-    setFullName(localStorage.getItem('fullName'));
-    setIsAdmin(localStorage.getItem('isAdmin'));
-    setProfileLink(localStorage.getItem('profileLink'));
+    setUserName(localStorage.getItem("Username"));
+    setUserID(localStorage.getItem("ID"));
+    setFullName(localStorage.getItem("fullName"));
+    setIsAdmin(localStorage.getItem("isAdmin"));
+    setProfileLink(localStorage.getItem("profileLink"));
     CheckIfLoggedIn();
   }, []);
 
-
   function CheckIfLoggedIn() {
-    console.log(localStorage.getItem('ID'));
-    if (localStorage.getItem('ID') == null){
-      window.location.href = '/';
+    console.log(localStorage.getItem("ID"));
+    if (localStorage.getItem("ID") == null) {
+      window.location.href = "/";
     }
   }
 
   const handleSettings = () => {
     // Your custom logic here
-    console.log('Settings Icon Clicked');
-    window.location.href = '/dashboard/profile';
+    console.log("Settings Icon Clicked");
+    window.location.href = "/dashboard/profile";
   };
 
-  const handleSignOut = () =>{
-    console.log('SignOut');
-    localStorage.removeItem('ID');
-    localStorage.removeItem('Username');
-    localStorage.removeItem('fullName');
-    localStorage.removeItem('isAdmin');
-    localStorage.removeItem('profileLink');
-    window.location.href = '/';
-  }
+  const handleSignOut = () => {
+    console.log("SignOut");
+    localStorage.removeItem("ID");
+    localStorage.removeItem("Username");
+    localStorage.removeItem("fullName");
+    localStorage.removeItem("isAdmin");
+    localStorage.removeItem("profileLink");
+    window.location.href = "/";
+  };
 
-  const handleUserProfilePicture = () =>{
+  const handleUserProfilePicture = () => {
     console.log("handleProfilePicture");
-  }
+  };
 
   const segment = useSelectedLayoutSegment();
   const sidebarOptions = [
@@ -200,28 +198,32 @@ export default function Sidebar() {
             {/* {sidebarOptions.map((option) => (
               <SidebarItems option={option}></SidebarItems>
             ))} */}
-            {IsAdmin === "true" ? (
-              sidebarOptions.map((option) => (
-                <SidebarItems key={option.href} option={option} />
-              ))
-            ) : (
-              sidebarOptionsNotAdmin.map((option) => (
-                <SidebarItems key={option.href} option={option} />
-              ))
-            )}
+            {IsAdmin === "true"
+              ? sidebarOptions.map((option) => (
+                  <SidebarItems key={option.href} option={option} />
+                ))
+              : sidebarOptionsNotAdmin.map((option) => (
+                  <SidebarItems key={option.href} option={option} />
+                ))}
           </ul>
         </nav>
 
         <div className="flex items-center gap-4 px-5">
-        <div className="aspect-square w-10 rounded-full" style={{ position: 'relative' }}>
-          <img
-            src="/sj-logo.png" // Replace with the actual path to your image
-            alt="Default Profile"
-            className="w-full h-full rounded-full object-cover"
-          />
-        </div>
+          <div
+            className="aspect-square w-10 rounded-full"
+            style={{ position: "relative" }}
+          >
+            <img
+              src="/sj-logo.png" // Replace with the actual path to your image
+              alt="Default Profile"
+              className="w-full h-full rounded-full object-cover"
+            />
+          </div>
           <h1 className="pr-10 text-white">{UserName}</h1>
-          <SettingsIcon  onClick={handleSettings} style={{ cursor: 'pointer', color:'white' }} />
+          <SettingsIcon
+            onClick={handleSettings}
+            style={{ cursor: "pointer", color: "white" }}
+          />
         </div>
 
         <button
@@ -240,6 +242,14 @@ export default function Sidebar() {
             </div>
           </div>
         </button>
+        <div className="">
+          <p className="text-red-300 text-xs hover:text-lg hover:underline hover:text-gray-50 hover:font-black transition-all">Build 0.3 ALPHA</p>
+        </div>
+        <div className="">
+          <p className="text-red-300 text-xs hover:text-sm transition-all hover:text-gray-50 hover:font-black">
+            Developed by PUP-SJ BSIT 4-1 Batch 2023-2024
+          </p>
+        </div>
       </div>
     </div>
   );

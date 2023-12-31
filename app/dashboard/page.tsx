@@ -373,7 +373,7 @@ const Dashboard: React.FC = () => {
         <div className="flex my-5">
           <button
             type="button"
-            className="py-2 px-10 rounded-lg bg-red-800 rounded-lg hover:bg-red-900 hover:shadow-l"
+            className="py-2 px-10 rounded-lg bg-red-800 rounded-lg hover:bg-red-900 transition-all"
             style={{ color: "white" }}
             onClick={RefreshPage}
           >
@@ -390,7 +390,7 @@ const Dashboard: React.FC = () => {
               <FileText className="p-5 w-full h-full bg-red-900 rounded-lg text-white border-black"></FileText>
             </div>
             <div className="col-span-2">
-              <p className="text-lg font-medium w-full">Barangay Clearances</p>
+              <p className="text-lg font-medium w-full hover:font-black hover:text-xl transition-all">Barangay Clearances</p>
             </div>
             <div className="col-start-2 col-span-2">
               <h1 className="text-5xl font-semibold">
@@ -405,7 +405,7 @@ const Dashboard: React.FC = () => {
               <MapPin className="p-5 w-full h-full bg-red-900 rounded-lg text-white border-black  "></MapPin>
             </div>
             <div className="col-span-2">
-              <p className="text-lg font-medium w-full">Barangay Indigencies</p>
+              <p className="text-lg font-medium w-full hover:font-black hover:text-xl transition-all">Barangay Indigencies</p>
             </div>
             <div className="col-start-2 col-span-2">
               <h1 className="text-5xl font-semibold">
@@ -420,8 +420,8 @@ const Dashboard: React.FC = () => {
               <Cross className="p-5 w-full h-full bg-red-900 rounded-lg text-white border-black  "></Cross>
             </div>
             <div className="col-span-2">
-              <p className="text-lg font-medium w-full">
-                HealthCenter Referrals
+              <p className="text-lg font-medium w-full hover:font-black hover:text-xl transition-all">
+                Health Center Referrals
               </p>
             </div>
             <div className="col-start-2 col-span-2">
@@ -435,7 +435,7 @@ const Dashboard: React.FC = () => {
               <AlertTriangle className="p-5 w-full h-full bg-red-900 rounded-lg text-white border-black  "></AlertTriangle>
             </div>
             <div className="col-span-2">
-              <p className="text-lg font-medium w-full">BDRRMC Records</p>
+              <p className="text-lg font-medium w-full hover:font-black hover:text-xl transition-all">BDRRMC Records</p>
             </div>
             <div className="col-start-2 col-span-2">
               <h1 className="text-5xl font-medium">{DataCounter.BDRRMC}</h1>
@@ -448,7 +448,7 @@ const Dashboard: React.FC = () => {
               <BadgeAlert className="p-5 w-full h-full bg-red-900 rounded-lg text-white border-black  "></BadgeAlert>
             </div>
             <div className="col-span-2">
-              <p className="text-lg font-medium w-full">Incident Reports</p>
+              <p className="text-lg font-medium w-full hover:font-black hover:text-xl transition-all">Incident Reports</p>
             </div>
             <div className="col-start-2 col-span-2">
               <h1 className="text-5xl font-medium">{DataCounter.Incidents}</h1>
@@ -461,7 +461,7 @@ const Dashboard: React.FC = () => {
               <LineChart className="p-5 w-full h-full bg-white rounded-lg text-red-900 border-black  "></LineChart>
             </div>
             <div className="col-span-2">
-              <p className="text-lg font-medium w-full text-white">
+              <p className="text-lg font-medium w-full text-white hover:font-black hover:text-xl transition-all">
                 Total Documents
               </p>
             </div>
@@ -544,11 +544,6 @@ const Dashboard: React.FC = () => {
             <p>Loading chart data...</p>
           )}
         </div>
-      </div>
-      <div className="">
-        <p className="">
-          Build 0.2 Alpha. Developed by PUP-SJ BSIT 4-1 Batch 2023-2024
-        </p>
       </div>
     </div>
   );

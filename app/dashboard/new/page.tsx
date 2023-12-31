@@ -119,7 +119,7 @@ const New: React.FC = () => {
     toast.current!.show({
       severity: "success",
       summary: "Success",
-      detail: "Message Content",
+      detail: "Document Created Successfully",
       life: 3000,
     });
   };
@@ -478,7 +478,7 @@ const New: React.FC = () => {
             <option selected>Please select one...</option>
             <option value="Barangay Indigency">Barangay Indigency</option>
             <option value="Barangay Clearance">Barangay Clearance</option>
-            <option value="Referral Slip">Referral Slip</option>
+            <option value="Referral Slip">Health Center Referral Slip</option>
           </select>
           <button
             type="button"
@@ -742,11 +742,6 @@ const New: React.FC = () => {
           </div>
         </div>
       </form>
-      <div className="">
-        <p className="">
-          Build 0.2 Alpha. Developed by PUP-SJ BSIT 4-1 Batch 2023-2024
-        </p>
-      </div>
     </div>
   );
 };
