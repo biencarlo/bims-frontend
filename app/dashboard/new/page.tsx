@@ -466,10 +466,10 @@ const New: React.FC = () => {
           Type of Entry
           <span className="text-red-500"> *</span>
         </label>
-        <div className="flex gap-8 pb-4">
+        <div className="flex justify-content-between gap-5 pb-4">
           <select
             id="docuTitle"
-            className="rounded-md p-2 mt-[-2px] w-6/12 bg-gray-50 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className=" grow rounded-md p-2 mt-[-2px] w-7/12 bg-gray-50 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             name="docuTitle"
             value={selectedOption}
             onChange={handleSelectChange}
@@ -482,14 +482,14 @@ const New: React.FC = () => {
           </select>
           <button
             type="button"
-            className="py-3 px-6 bg-red-800 rounded-lg ocr-btn hover:bg-red-900"
+            className="py-3 px-6 rounded-lg bg-red-800 text-white hover:text-red-900 hover:bg-white hover:border-red-900 hover:border-2 font-bold transition-all"
           >
             <FontAwesomeIcon icon={faCameraAlt as IconProp} className="mr-2" />
             Use OCR (Scan Document)
           </button>
           <button
             type="button"
-            className="py-2 px-10 rounded-lg bg-white hover:bg-gray-200"
+            className="py-2 px-10 rounded-lg bg-white hover:bg-red-900 hover:text-white border-2 border-red-900 text-red-900 font-bold transition-all"
             onClick={handleCreateEntryClick}
           >
             <FontAwesomeIcon icon={faFile as IconProp} className="mr-2" />
@@ -718,8 +718,8 @@ const New: React.FC = () => {
             />
           </div>
         </div>
-        <div className="flex gap-4 pb-4">
-          <div className="flex flex-col">
+        <div className="flex justify-content-between gap-4 pb-4">
+          <div className="flex grow flex-col">
             <label htmlFor="reasonForReferral">Reason for Referral:</label>
             <textarea
               className="rounded-md"

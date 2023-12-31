@@ -172,7 +172,7 @@ const UserList: React.FC = () => {
       <React.Fragment>
         <button
           type="button"
-          className="text-xs py-2 px-5 mr-2 rounded-lg bg-white-800 rounded-lg text-red-800 border-solid border-red-800 border-2"
+          className="text-xs py-2 px-5 mr-2 rounded-lg bg-white-800 rounded-lg text-red-800 border-solid border-red-800 border-2 hover:bg-gray-400 transition-all"
           onClick={() => {
             editUser(rowData);
             setCreateUpdateHeader("Update User");
@@ -183,7 +183,7 @@ const UserList: React.FC = () => {
         </button>
         <button
           type="button"
-          className="text-xs py-2 px-5 mr-2 rounded-lg bg-red-800 rounded-lg text-white border-solid border-red-800 border-2"
+          className="text-xs py-2 px-5 mr-2 rounded-lg bg-red-800 rounded-lg text-white border-solid border-red-800 border-2 hover:bg-red-900 transition-all"
           onClick={() => confirmDeleteUser(rowData)}
         >
           <FontAwesomeIcon icon={faTrash as IconProp} className="mr-2" />
@@ -434,16 +434,16 @@ const UserList: React.FC = () => {
       </Breadcrumbs>
 
       <Toast ref={toast} />
-      <div className="flex justify-content-between gap-8 pb-4 pt-4">
+      <div className="flex justify-content-between gap-5 pb-4 pt-4">
         <InputText
-          className="w-9/12"
+          className="grow w-5/12"
           value={globalFilterValue}
           onChange={onGlobalFilterChange}
           placeholder="Keyword Search"
         />
         <button
           type="button"
-          className="py-2 px-10 rounded-lg bg-white "
+          className="py-2 px-10 rounded-lg bg-white hover:bg-red-900 hover:text-white border-2 border-red-900 text-red-900 font-bold transition-all"
           onClick={exportExcel}
         >
           <FontAwesomeIcon icon={faFileExcel as IconProp} className="mr-2" />
@@ -452,7 +452,7 @@ const UserList: React.FC = () => {
         {IsAdmin == "false" ? null : (
           <button
             type="button"
-            className="py-2 px-10 rounded-lg bg-white "
+            className="py-2 px-10 rounded-lg bg-red-800 text-white hover:text-red-900 hover:bg-white hover:border-red-900 hover:border-2 font-bold transition-all"
             onClick={() => {
               setVisible(true);
               setCreateUpdateHeader("Create User");
@@ -462,7 +462,9 @@ const UserList: React.FC = () => {
             Create Entry
           </button>
         )}
-        <div className="card flex justify-content-center">
+        
+      </div>
+      <div className="card flex justify-content-center hidden">
           <Dialog
             header={CreateUpdateHeader}
             visible={visible}
@@ -581,7 +583,6 @@ const UserList: React.FC = () => {
             </form>
           </Dialog>
         </div>
-      </div>
       <DataTable
         filters={filters}
         value={users}

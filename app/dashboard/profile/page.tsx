@@ -118,7 +118,7 @@ const Profile: React.FC = () => {
   return (
     <div className="px-8 py-4">
       <h1 className="text-4xl font-black my-6 text-red-900 tracking-[-0.5px]">
-        Profile
+        Change Profile Password
       </h1>
       <div className="flex gap-4 pb-4">
         <div className="pb-2 flex flex-col grow">
@@ -173,7 +173,7 @@ const Profile: React.FC = () => {
           <button
             style={{ marginTop: "20px" }}
             type="button"
-            className="py-2 px-10 rounded-lg bg-white "
+            className="py-4 px-10 rounded-lg bg-white hover:bg-red-900 hover:text-white border-2 border-red-900 text-red-900 font-bold transition-all"
             onClick={handleChangePassword}
           >
             <FontAwesomeIcon icon={faLock as IconProp} className="mr-2" />

@@ -673,16 +673,16 @@ const Indigencies: React.FC = () => {
           Indigency Records
         </Typography>
       </Breadcrumbs>
-      <div className="flex justify-content-between gap-8 pb-4 pt-4">
+      <div className="flex justify-content-between gap-5 pb-4 pt-4">
         <InputText
-          className="w-9/12"
+          className="grow w-9/12"
           value={globalFilterValue}
           onChange={onGlobalFilterChange}
           placeholder="Keyword Search"
         />
         <button
           type="button"
-          className="py-2 px-10 rounded-lg bg-white hover:bg-gray-400 transition-all"
+          className="py-2 px-10 rounded-lg bg-white hover:bg-red-900 hover:text-white border-2 border-red-900 text-red-900 font-bold transition-all"
           onClick={exportExcel}
         >
           <FontAwesomeIcon icon={faFileCsv as IconProp} className="mr-2" />

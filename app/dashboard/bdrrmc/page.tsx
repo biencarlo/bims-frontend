@@ -603,17 +603,16 @@ const Bdrrmc: React.FC = () => {
           BDRRMC Records
         </Typography>
       </Breadcrumbs>
-      <div className="flex justify-content-between gap-8 pb-4 pt-4">
+      <div className="flex justify-content-between gap-5 pb-4 pt-4">
         <InputText
-          className="w-9/12"
+          className="grow w-5/12"
           value={globalFilterValue}
           onChange={onGlobalFilterChange}
           placeholder="Keyword Search"
         />
         <button
           type="button"
-          className="py-2 px-10 mr-2 rounded-lg bg-red-800 rounded-lg border-solid border-red-800 border-2 hover:bg-red-900 transition-all"
-          style={{ color: "white" }}
+          className="py-2 px-10 rounded-lg bg-red-800 text-white hover:text-red-900 hover:bg-white hover:border-red-900 hover:border-2 font-bold transition-all"
           onClick={() => {
             setVisible(true);
             setshouldShowButton(false);
@@ -629,7 +628,7 @@ const Bdrrmc: React.FC = () => {
         </button>
         <button
           type="button"
-          className="py-2 px-10 rounded-lg bg-white hover:bg-gray-400 transition-all"
+          className="py-2 px-10 rounded-lg bg-white hover:bg-red-900 hover:text-white border-2 border-red-900 text-red-900 font-bold transition-all"
           onClick={exportExcel}
         >
           <FontAwesomeIcon icon={faFileCsv as IconProp} className="mr-2" />
