@@ -13,6 +13,9 @@ import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { faRefresh } from "@fortawesome/free-solid-svg-icons";
 import withLoading from "../../components/withLoading";
 
+
+
+
 import {
   LayoutGrid,
   FilePlus,
@@ -26,6 +29,7 @@ import {
   BadgeAlert,
   LineChart,
 } from "lucide-react";
+
 
 interface LabelData {
   Labels: string[];
@@ -369,7 +373,7 @@ const Dashboard: React.FC = () => {
         <div className="flex my-5">
           <button
             type="button"
-            className="py-2 px-10 rounded-lg bg-red-800 rounded-lg"
+            className="py-2 px-10 rounded-lg bg-red-800 rounded-lg hover:bg-red-900 hover:shadow-l"
             style={{ color: "white" }}
             onClick={RefreshPage}
           >

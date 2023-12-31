@@ -5,7 +5,7 @@ import { Mulish } from "next/font/google";
 const font = Mulish({ subsets: ["latin"], weight: ['300','400','500','600','700','800'] });
 
 export const metadata: Metadata = {
-  title: "Barangay Batis Information Management System",
+  title: "BATIS - BIMS",
   description: "Barangay Batis Information Management System",
 };
 

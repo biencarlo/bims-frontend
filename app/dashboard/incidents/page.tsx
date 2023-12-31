@@ -235,7 +235,7 @@ const Incidents: React.FC = () => {
       var printDocumentURL =  api_url+"incidents/"+individualResidents.ID+
       "/incidents_"+individualResidents.ID;
       console.log(printDocumentURL);
-      window.location.href = printDocumentURL;
+      window.open(printDocumentURL, '_blank');
     };
   
   

@@ -234,7 +234,7 @@ interface BDRRMC {
       var printDocumentURL =  api_url+"bdrrmc/"+individualResidents.ID+
       "/bdrrmc_"+individualResidents.ID;
       console.log(printDocumentURL);
-      window.location.href = printDocumentURL;
+      window.open(printDocumentURL, '_blank');
     };
   
   

@@ -259,7 +259,7 @@ const saveAsExcelFile = (buffer: BlobPart, fileName: string) => {
     var printDocumentURL =  api_url+"clearances/"+individualResidents.ResidentID+"/"+individualResidents.ID +
     "/clearances_"+individualResidents.ResidentID+"_"+individualResidents.ID+".pdf"
     console.log(printDocumentURL);
-    window.location.href = printDocumentURL;
+    window.open(printDocumentURL, '_blank');
   };
 
 
@@ -314,11 +314,11 @@ const saveAsExcelFile = (buffer: BlobPart, fileName: string) => {
   const footerContent = isFormDisabled ? null : (
 
     <div className="flex flex-row justify-end">
-        <button type="button" className="py-2 px-10 rounded-lg bg-gray-800 rounded-lg" style={{color:'white'}} onClick={() => setDeleteResidentDialog(true)}>
+        <button type="button" className="py-2 px-10 rounded-lg bg-gray-800 rounded-lg hover:bg-gray-900" style={{color:'white'}} onClick={() => setDeleteResidentDialog(true)}>
               <FontAwesomeIcon icon={faArchive as IconProp} className="mr-2" />
               Archive
         </button>
-        <button type="button" className="py-2 px-10 rounded-lg bg-red-800 rounded-lg" style={{color:'white'}} onClick={CreateUserAPI}>
+        <button type="button" className="py-2 px-10 rounded-lg bg-red-800 rounded-lg hover:bg-red-900" style={{color:'white'}} onClick={CreateUserAPI}>
               <FontAwesomeIcon icon={faEdit as IconProp} className="mr-2" />
               Update Record
         </button>
@@ -468,12 +468,12 @@ const saveAsExcelFile = (buffer: BlobPart, fileName: string) => {
   const actionBodyTemplate = (rowData: any) => {
     return (
         <React.Fragment>
-          <button type="button" className="text-xs py-2 px-5 mr-2 rounded-lg bg-red-800 rounded-lg border-solid border-red-800 border-2" style={{color:'white'}} 
+          <button type="button" className="text-sm py-2 px-5 mr-2 rounded-lg bg-red-800 rounded-lg border-solid border-red-800 border-2 hover:bg-red-900" style={{color:'white'}} 
           onClick={() => printRowData(rowData)}>
                 <FontAwesomeIcon icon={faPrint as IconProp} className="mr-2" />
                 Print
           </button>
-          <button type="button" className="text-xs py-2 px-5 mr-2 rounded-lg bg-white-800 rounded-lg text-red-800 border-solid border-red-800 border-2" onClick={() => {
+          <button type="button" className="text-sm py-2 px-5 mr-2 rounded-lg bg-white-800 rounded-lg text-red-800 border-solid border-red-800 border-2" onClick={() => {
             
             setIsFormDisabled(true);
               onRowView(rowData);
@@ -481,7 +481,7 @@ const saveAsExcelFile = (buffer: BlobPart, fileName: string) => {
                 <FontAwesomeIcon icon={faFile as IconProp} className="mr-2" />
                 View
           </button>
-          <button type="button" className="text-xs py-2 px-5 mr-2 rounded-lg bg-white-800 rounded-lg text-red-800 border-solid border-red-800 border-2" onClick={() => {
+          <button type="button" className="text-sm py-2 px-5 mr-2 rounded-lg bg-white-800 rounded-lg text-red-800 border-solid border-red-800 border-2 hover:bg-gray-400" onClick={() => {
               editResident(rowData);
             }}>
                 <FontAwesomeIcon icon={faEdit as IconProp} className="mr-2" />

@@ -317,7 +317,7 @@ const saveAsExcelFile = (buffer: BlobPart, fileName: string) => {
     var printDocumentURL =  api_url+ docuTypeUrl1+individualResidents.ID+"/"+individualResidents.DocumentID +
     docuTypeUrl2 + individualResidents.ID+"_"+individualResidents.DocumentID+".pdf"
     console.log(printDocumentURL);
-    window.location.href = printDocumentURL;
+    window.open(printDocumentURL, '_blank');
   };
 
   

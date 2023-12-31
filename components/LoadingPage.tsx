@@ -30,7 +30,7 @@ const LoadingPage: React.FC = () => {
         >
           <ProgressSpinner
             style={{ width: "100px", height: "100px" }}
-            strokeWidth="8"
+            strokeWidth="7"
             animationDuration="0.4s"
           />
           <div

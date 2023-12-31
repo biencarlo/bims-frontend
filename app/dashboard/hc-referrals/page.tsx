@@ -259,7 +259,7 @@ const saveAsExcelFile = (buffer: BlobPart, fileName: string) => {
     var printDocumentURL =  api_url+"referrals/"+individualResidents.ResidentID+"/"+individualResidents.ID +
     "/referrals_"+individualResidents.ResidentID+"_"+individualResidents.ID+".pdf"
     console.log(printDocumentURL);
-    window.location.href = printDocumentURL;
+    window.open(printDocumentURL, '_blank');
   };
 
   const confirmDeleteResident = (individualResidents: any) => {

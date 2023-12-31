@@ -482,14 +482,14 @@ const New: React.FC = () => {
           </select>
           <button
             type="button"
-            className="py-2 px-6 bg-red-800 rounded-lg ocr-btn"
+            className="py-3 px-6 bg-red-800 rounded-lg ocr-btn hover:bg-red-900"
           >
             <FontAwesomeIcon icon={faCameraAlt as IconProp} className="mr-2" />
             Use OCR (Scan Document)
           </button>
           <button
             type="button"
-            className="py-2 px-10 rounded-lg bg-white "
+            className="py-2 px-10 rounded-lg bg-white hover:bg-gray-200"
             onClick={handleCreateEntryClick}
           >
             <FontAwesomeIcon icon={faFile as IconProp} className="mr-2" />
