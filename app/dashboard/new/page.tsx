@@ -469,7 +469,7 @@ const New: React.FC = () => {
         <div className="flex justify-content-between gap-5 pb-4">
           <select
             id="docuTitle"
-            className=" grow rounded-md p-2 mt-[-2px] w-7/12 bg-gray-50 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className=" grow rounded-md p-2 mt-[-2px] w-5/12 bg-gray-50 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             name="docuTitle"
             value={selectedOption}
             onChange={handleSelectChange}
