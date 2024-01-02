@@ -417,7 +417,7 @@ const New: React.FC = () => {
           (document.getElementById("cedulaNo") as HTMLInputElement).value = "";
           (document.getElementById("precintNo") as HTMLInputElement).value = "";
         } else {
-          setNewError(response.data.Message || "An error occurred");
+          setNewError(response.data.message || "An error occurred");
           setTimeout(() => {
             setNewError(null);
           }, 3000); // 3000 milliseconds = 3 second
@@ -472,8 +472,8 @@ const New: React.FC = () => {
             className=" grow rounded-md p-2 mt-[-2px] w-5/12 bg-gray-50 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             name="docuTitle"
             value={selectedOption}
-            onChange={handleSelectChange}
             required
+            onChange={handleSelectChange}
           >
             <option selected>Please select one...</option>
             <option value="Barangay Indigency">Barangay Indigency</option>
@@ -482,7 +482,7 @@ const New: React.FC = () => {
           </select>
           <button
             type="button"
-            className="py-3 px-6 rounded-lg bg-red-800 text-white hover:text-red-900 hover:bg-white hover:border-red-900 hover:border-2 font-bold transition-all"
+            className="ocr-btn py-3 px-6 rounded-lg bg-red-800 text-white hover:text-red-900 hover:bg-white hover:border-red-900 hover:border-2 font-bold transition-all"
           >
             <FontAwesomeIcon icon={faCameraAlt as IconProp} className="mr-2" />
             Use OCR (Scan Document)

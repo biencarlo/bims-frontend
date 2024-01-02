@@ -714,12 +714,12 @@ const Indigencies: React.FC = () => {
           sortable
         ></Column>
         <Column
-          field="ResidentData.LastName"
+          field="ResidentData.FirstName"
           header="First Name"
           sortable
         ></Column>
         <Column
-          field="ResidentData.LastName"
+          field="ResidentData.MiddleName"
           header="Middle Name"
           sortable
         ></Column>
