@@ -280,24 +280,27 @@ const UploadModal: React.FC<UploadModalProps> = ({
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
+          transition: 'opacity 300ms ease-in-out',
         },
         content: {
           width: '75%', // Adjust width as needed
-          maxWidth: '800px', // Set a maximum width
-          height: 'auto', // Allow content to expand as needed
+          maxWidth: '600px', // Set a maximum width
+          height: '600px', // Allow content to expand as needed
           margin: 'auto', // Center horizontally
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
+          borderRadius: '20px',
+          transition: 'opacity 300ms ease-in-out',
         },
       }}
     >
-        <div className="p-10" style={{borderRadius:'5px', border: '5px dashed grey', justifyContent: 'center', alignItems:'center', display:'flex',flexDirection: 'column', width:'500px', height:'500px'}}>
-        <FontAwesomeIcon icon={faFileArrowUp as IconProp} className="mr-2 pb-10" style={{ height: '200px', width: '200px' }} />
-        <h2 className="pb-2">Select a file or drag and drop here</h2>
+        <div className="p-10" style={{borderRadius:'10px', border: '3px dashed grey', justifyContent: 'center', alignItems:'center', display:'flex',flexDirection: 'column', width:'500px', height:'500px'}}>
+        <FontAwesomeIcon icon={faFileArrowUp as IconProp} className="mr-2 pb-10" style={{ height: '150px', width: '150px' }} />
+        <h2 className="pb-2 text-xl">Select a file</h2>
         <h2 className="pb-10" style={{color:'grey'}}>JPG, or PNG, file size no more than 10MB</h2>
-        <label htmlFor="myFileInput" className="select-file py-2 px-10 rounded-lg bg-white ">
+        <label htmlFor="myFileInput" className="select-file py-2 px-10 rounded-lg bg-white hover:bg-red-900 hover:text-white transition-all hover:border-none">
           Select File
         </label>
         <input className="py-2 px-10 rounded-lg bg-white " id="myFileInput" type="file" accept="image/*;" onChange={handleFileChange} style={{display:'none'}}/>
