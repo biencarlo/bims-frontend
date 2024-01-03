@@ -350,7 +350,7 @@ const Dashboard: React.FC = () => {
             </div>
             <div>
               <h1 className="text-2xl font-bold">
-                Information Management System
+                e-Nexus Barangay Information Management System
               </h1>
             </div>
           </div>
