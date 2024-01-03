@@ -472,15 +472,18 @@ const ResidentsList: React.FC = () => {
     setSelectedOptionCategory(event.data.DocumentData.PhilHealthCategory);
     setSelectedOption(event.data.DocumentType);
 
-    var datePartsValidity = event.data.ValidUntil.split(/[\s:-]+/);
-    var dateObjectValidity = new Date(
-      parseInt(datePartsValidity[0]), // Year
-      parseInt(datePartsValidity[1]) - 1, // Month
-      parseInt(datePartsValidity[2]) // Day
-    );
-    setSelectedDateValidity(dateObjectValidity);
+    if (event.data.DocumentType === "Barangay Clearance") {
+      var datePartsValidity =
+        event.data.DocumentData.ValidUntil.split(/[\s:-]+/);
+      var dateObjectValidity = new Date(
+        parseInt(datePartsValidity[0]), // Year
+        parseInt(datePartsValidity[1]) - 1, // Month
+        parseInt(datePartsValidity[2]) // Day
+      );
+      setSelectedDateValidity(dateObjectValidity);
+    }
 
-    const dateParts = event.data.ResidentData.BirthDate.split("/");
+    const dateParts = event.data.BirthDate.split("/");
     const year = parseInt(dateParts[2], 10);
     const month = parseInt(dateParts[0], 10) - 1;
     const day = parseInt(dateParts[1], 10);
