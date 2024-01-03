@@ -52,7 +52,84 @@ interface DataCountsPie {
   Claimed: number;
 }
 
+interface MonthAndYear {
+  month: string;
+  year: number;
+}
+
 const Dashboard: React.FC = () => {
+  const getCurrentMonthYear = (): MonthAndYear => {
+    const monthNames: string[] = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+
+    // Create a new Date object
+    const currentDate: Date = new Date();
+
+    // Get the current month (months are zero-based)
+    const currentMonthIndex: number = currentDate.getMonth();
+
+    // Get the month name using the index
+    const currentMonth: string = monthNames[currentMonthIndex];
+
+    // Get the current year
+    const currentYear: number = currentDate.getFullYear();
+
+    return { month: currentMonth, year: currentYear };
+  };
+  const getCurrentMonth = (): string => {
+    const monthNames: string[] = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+
+    // Create a new Date object
+    const currentDate: Date = new Date();
+
+    // Get the current month (months are zero-based)
+    const currentMonthIndex: number = currentDate.getMonth();
+
+    // Get the month name using the index
+    const currentMonth: string = monthNames[currentMonthIndex];
+
+    return currentMonth;
+  };
+
+  const getGreeting = (): string => {
+    const currentTime = new Date().getHours();
+
+    if (currentTime >= 5 && currentTime < 12) {
+      return "Good morning";
+    } else if (currentTime >= 12 && currentTime < 18) {
+      return "Good afternoon";
+    } else {
+      return "Good evening";
+    }
+  };
+
+  const greeting: string = getGreeting();
+
   const [DataCounter, setDataCounter] = useState<DataCounts>({
     Clearance: 0,
     Indigencies: 0,
@@ -333,52 +410,58 @@ const Dashboard: React.FC = () => {
   }
 
   return (
-      <div className="px-8 py-8 h-screen">
-        <div className="flex bg-blue-950 text-white py-5 px-7 rounded-t-[12px] gap-3">
-          <div className="aspect-square relative w-full max-w-[60px]">
-            <Image src={"/sj-logo.png"} fill={true} alt="sjLogo" />
-          </div>
-
-          <div className="aspect-square relative w-full max-w-[60px]">
-            <Image src={"/logo_zamora-1.png"} fill={true} alt="sjLogo" />
-          </div>
-          <div className="items-center pl-6">
-            <div>
-              <p className="text-[10pt] font-medium pt-1 tracking-[2px]">
-                BARANGAY BATIS, SAN JUAN CITY
-              </p>
-            </div>
-            <div>
-              <h1 className="text-2xl font-bold">
-                e-Nexus Barangay Information Management System
-              </h1>
-            </div>
-          </div>
+    <div className="px-8 py-8 h-screen">
+      <div className="flex bg-blue-950 text-white py-5 px-7 rounded-t-[12px] gap-3">
+        <div className="aspect-square relative w-full max-w-[60px]">
+          <Image src={"/sj-logo.png"} fill={true} alt="sjLogo" />
         </div>
 
-        <div className="flex flex-row">
-          <div className="flex flex-auto">
-            <h1 className="text-4xl font-black my-6 text-red-900 tracking-[-0.5px]">
-              Dashboard
+        <div className="aspect-square relative w-full max-w-[60px]">
+          <Image src={"/logo_zamora-1.png"} fill={true} alt="sjLogo" />
+        </div>
+        <div className="items-center pl-6">
+          <div>
+            <p className="text-[10pt] font-medium pt-1 tracking-[2px]">
+              BARANGAY BATIS, SAN JUAN CITY
+            </p>
+          </div>
+          <div>
+            <h1 className="text-2xl font-bold">
+              e-Nexus Barangay Information Management System
             </h1>
-            <span className="ml-3 text-red-900 text-lg mt-9 italic">
-              Updated {formattedDateTime}
-            </span>
-          </div>
-          <div></div>
-          <div className="flex my-5">
-            <button
-              type="button"
-              className="py-2 px-10 rounded-lg bg-red-800 text-white hover:text-red-900 hover:bg-white hover:border-red-900 hover:border-2 font-bold transition-all"
-              onClick={RefreshPage}
-            >
-              <FontAwesomeIcon icon={faRefresh as IconProp} className="mr-2" />
-              Reload Dashboard
-            </button>
           </div>
         </div>
+      </div>
 
-        <div className="grid grid-cols-13 grid-rows-2 gap-4 border border-red-900 rounded-lg p-4">
+      <div className="flex flex-row">
+        <div className="flex flex-auto">
+          <h1 className="text-4xl font-black my-6 text-red-900 tracking-[-0.5px]">
+            {greeting}, {FullName}!
+          </h1>
+        </div>
+        <div></div>
+        <div className="flex my-5">
+          <button
+            type="button"
+            className="py-2 px-10 rounded-lg bg-red-800 text-white hover:text-red-900 hover:bg-blue-950 hover:border-white hover:text-white font-bold transition-all"
+            onClick={RefreshPage}
+          >
+            <FontAwesomeIcon icon={faRefresh as IconProp} className="mr-2" />
+            Reload Dashboard
+          </button>
+        </div>
+      </div>
+
+      <div className="  border border-blue-950 rounded-lg p-4">
+        <div className="flex flex-row">
+          <div className="grow text-2xl font-black text-blue-950 pb-4">
+            {getCurrentMonthYear().month} {getCurrentMonthYear().year} Dashboard{" "}
+          </div>
+          <div className="ml-3 flex-row-reverse text-blue-950 text-right text-lg italic">
+            Updated {formattedDateTime}
+          </div>
+        </div>
+        <div className="grid grid-cols-13 gap-4">
           <div className="col-span-2 row-span-1 py-4 px-4  bg-white rounded-lg">
             <div className="grid grid-cols-3 grid-rows-2 gap-4">
               <div className="col-span-1 row-span-2 ">
@@ -485,7 +568,7 @@ const Dashboard: React.FC = () => {
             <div className="grid grid-cols-3 grid-rows-1 gap-4">
               <div className="col-span-3">
                 <h1 className="text-2xl font-black text-red-900">
-                  Brgy. Records created this month
+                  Document status
                 </h1>
               </div>
               <div className="col-span-3 row-span-3 row-start-2 ">
@@ -538,20 +621,21 @@ const Dashboard: React.FC = () => {
             </div>
           </div>
         </div>
+      </div>
 
-        <div className="border rounded-lg border-red-900 p-4 mt-4">
-          <h1 className="text-2xl font-black text-red-900 pb-4">
-            Processed Records History
-          </h1>
-          <div className="card bg-white rounded-lg">
-            {GetDataChart ? (
-              <Chart type="line" data={chartData} options={chartOptions} />
-            ) : (
-              <p>Loading chart data...</p>
-            )}
-          </div>
+      <div className="border rounded-lg border-blue-950 p-4 mt-4">
+        <h1 className="text-2xl font-black text-blue-950 pb-4">
+          Processed Records History
+        </h1>
+        <div className="card bg-white rounded-lg">
+          {GetDataChart ? (
+            <Chart type="line" data={chartData} options={chartOptions} />
+          ) : (
+            <p>Loading chart data...</p>
+          )}
         </div>
       </div>
+    </div>
   );
 };
 export default withLoading(Dashboard);
