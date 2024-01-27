@@ -36,20 +36,20 @@ import { Button } from "primereact/button";
 import "primeicons/primeicons.css";
 import { Toast } from "primereact/toast";
 import { Tag } from "primereact/tag";
+
 import withLoading from "../../../components/withLoading";
 
-interface Incident {
+interface BDRRMC {
   ID: number;
-  CompliantFullName: string;
-  Respondent: string;
-  IncidentStatus: string;
-  IncidentDateTime: string;
-  IncidentLocation: string;
-  IncidentNarration: string;
+  TypeOfRecord: string;
+  PartiesInvolved: string;
+  DateTime: string;
+  Location: string;
+  RecordDetails: string;
   IssuingOfficer: string;
 }
 
-const Incidents: React.FC = () => {
+const Bdrrmc: React.FC = () => {
   const toast = useRef<Toast>(null);
 
   const showSuccessFul = () => {
@@ -123,7 +123,7 @@ const Incidents: React.FC = () => {
   };
 
   const [selectedOptionDocumentStatus, setSelectedOptionDocumentStatus] =
-    useState<string>("Active");
+    useState<string>("For Printing");
   const handleSelectChangeDocumentStatus = (
     event: ChangeEvent<HTMLSelectElement>
   ) => {
@@ -166,7 +166,7 @@ const Incidents: React.FC = () => {
   useEffect(() => {
     var getclearance = async () => {
       await axios
-        .get(api_url + "incidents")
+        .get(api_url + "bdrrmc")
         .then((response) => setResidents(response.data));
       return;
     };
@@ -177,24 +177,22 @@ const Incidents: React.FC = () => {
 
   const [UpdateformData, setUpdateFormData] = useState({
     ID: "0",
-    CompliantFullName: "",
-    Respondent: "",
-    IncidentStatus: "",
-    IncidentDateTime: "",
-    IncidentLocation: "",
-    IncidentNarration: "",
+    TypeOfRecord: "",
+    PartiesInvolved: "",
+    DateTime: "",
+    Location: "",
+    RecordDetails: "",
     IssuingOfficer: "",
   });
 
   const resetUpdateForm = () => {
     setUpdateFormData({
       ID: "0",
-      CompliantFullName: "",
-      Respondent: "",
-      IncidentStatus: "",
-      IncidentDateTime: "",
-      IncidentLocation: "",
-      IncidentNarration: "",
+      TypeOfRecord: "",
+      PartiesInvolved: "",
+      DateTime: "",
+      Location: "",
+      RecordDetails: "",
       IssuingOfficer: "",
     });
   };
@@ -211,7 +209,7 @@ const Incidents: React.FC = () => {
 
   const exportExcel = () => {
     import("xlsx").then(async (xlsx) => {
-      const response = await axios.get(api_url + "incidents");
+      const response = await axios.get(api_url + "bdrrmc");
       const worksheet = xlsx.utils.json_to_sheet(response.data);
       const workbook = { Sheets: { data: worksheet }, SheetNames: ["data"] };
       const excelBuffer = xlsx.write(workbook, {
@@ -219,7 +217,7 @@ const Incidents: React.FC = () => {
         type: "array",
       });
 
-      saveAsExcelFile(excelBuffer, "incidents");
+      saveAsExcelFile(excelBuffer, "bdrrmc");
     });
   };
 
@@ -241,8 +239,9 @@ const Incidents: React.FC = () => {
     });
   };
 
-  const [individualResidents, setindividualResidents] =
-    useState<Incident | null>(null);
+  const [individualResidents, setindividualResidents] = useState<BDRRMC | null>(
+    null
+  );
   const [deleteResidentDialog, setDeleteResidentDialog] = useState(false);
 
   const printRowData = (individualResidents: any) => {
@@ -250,9 +249,9 @@ const Incidents: React.FC = () => {
     console.log(individualResidents);
     var printDocumentURL =
       api_url +
-      "incidents/" +
+      "bdrrmc/" +
       individualResidents.ID +
-      "/incidents_" +
+      "/bdrrmc_" +
       individualResidents.ID;
     console.log(printDocumentURL);
     window.open(printDocumentURL, "_blank");
@@ -271,7 +270,7 @@ const Incidents: React.FC = () => {
   const DeleteResidentApi = () => {
     var userIDTobeDeleted = individualResidents!.ID;
     axios
-      .delete(api_url + "incidents", {
+      .delete(api_url + "bdrrmc", {
         headers: {
           "Content-Type": "application/json",
         },
@@ -282,7 +281,7 @@ const Incidents: React.FC = () => {
       .then(async (response) => {
         if (response.data.Success) {
           await axios
-            .get(api_url + "incidents")
+            .get(api_url + "bdrrmc")
             .then((response) => setResidents(response.data));
           setDeleteResidentDialog(false);
           setVisible(false);
@@ -348,19 +347,17 @@ const Incidents: React.FC = () => {
     setVisible(true);
     setUpdateFormData({
       ID: event.data.ID,
-      CompliantFullName: event.data.CompliantFullName,
-      Respondent: event.data.Respondent,
-      IncidentStatus: event.data.IncidentStatus,
-      IncidentDateTime: event.data.IncidentDateTime,
-      IncidentLocation: event.data.IncidentLocation,
-      IncidentNarration: event.data.IncidentNarration,
+      TypeOfRecord: event.data.TypeOfRecord,
+      PartiesInvolved: event.data.PartiesInvolved,
+      DateTime: event.data.DateTime,
+      Location: event.data.Location,
+      RecordDetails: event.data.RecordDetails,
       IssuingOfficer: event.data.IssuingOfficer,
     });
 
-    //setSelectedOptionCategory(event.data.TypeOfRecord);
-    setSelectedOptionDocumentStatus(event.data.IncidentStatus);
+    setSelectedOptionCategory(event.data.TypeOfRecord);
 
-    var datePartsValidity = event.data.IncidentDateTime.split(/[\/\s:-]+/);
+    var datePartsValidity = event.data.DateTime.split(/[\/\s:-]+/);
     var dateObjectValidity = new Date(
       parseInt(datePartsValidity[2]), // Year
       parseInt(datePartsValidity[0]) - 1, // Month
@@ -374,21 +371,17 @@ const Incidents: React.FC = () => {
     setVisible(true);
     setUpdateFormData({
       ID: individualResident.ID,
-      CompliantFullName: individualResident.CompliantFullName,
-      Respondent: individualResident.Respondent,
-      IncidentStatus: individualResident.IncidentStatus,
-      IncidentDateTime: individualResident.IncidentDateTime,
-      IncidentLocation: individualResident.IncidentLocation,
-      IncidentNarration: individualResident.IncidentNarration,
+      TypeOfRecord: individualResident.TypeOfRecord,
+      PartiesInvolved: individualResident.PartiesInvolved,
+      DateTime: individualResident.DateTime,
+      Location: individualResident.Location,
+      RecordDetails: individualResident.RecordDetails,
       IssuingOfficer: individualResident.IssuingOfficer,
     });
 
-    //setSelectedOptionCategory(individualResident.TypeOfRecord);
+    setSelectedOptionCategory(individualResident.TypeOfRecord);
 
-    setSelectedOptionDocumentStatus(individualResident.IncidentStatus);
-
-    var datePartsValidity =
-      individualResident.IncidentDateTime.split(/[\/\s:-]+/);
+    var datePartsValidity = individualResident.DateTime.split(/[\/\s:-]+/);
     var dateObjectValidity = new Date(
       parseInt(datePartsValidity[2]), // Year
       parseInt(datePartsValidity[0]) - 1, // Month
@@ -405,20 +398,17 @@ const Incidents: React.FC = () => {
     setmodalState("Update");
     setUpdateFormData({
       ID: individualResident.ID,
-      CompliantFullName: individualResident.CompliantFullName,
-      Respondent: individualResident.Respondent,
-      IncidentStatus: individualResident.IncidentStatus,
-      IncidentDateTime: individualResident.IncidentDateTime,
-      IncidentLocation: individualResident.IncidentLocation,
-      IncidentNarration: individualResident.IncidentNarration,
+      TypeOfRecord: individualResident.TypeOfRecord,
+      PartiesInvolved: individualResident.PartiesInvolved,
+      DateTime: individualResident.DateTime,
+      Location: individualResident.Location,
+      RecordDetails: individualResident.RecordDetails,
       IssuingOfficer: individualResident.IssuingOfficer,
     });
 
-    // setSelectedOptionCategory(individualResident.TypeOfRecord);
-    setSelectedOptionDocumentStatus(individualResident.IncidentStatus);
+    setSelectedOptionCategory(individualResident.TypeOfRecord);
 
-    var datePartsValidity =
-      individualResident.IncidentDateTime.split(/[\/\s:-]+/);
+    var datePartsValidity = individualResident.DateTime.split(/[\/\s:-]+/);
     console.log(datePartsValidity[2]);
     console.log(datePartsValidity[0]);
     console.log(datePartsValidity[1]);
@@ -472,17 +462,17 @@ const Incidents: React.FC = () => {
 
   const actionStatusTemplate = (rowData: any) => {
     return (
-      <Tag value={rowData.IncidentStatus} severity={getSeverity(rowData)}></Tag>
+      <Tag value={rowData.DocumentStatus} severity={getSeverity(rowData)}></Tag>
     );
   };
 
   const getSeverity = (rowData: any) => {
-    switch (rowData.IncidentStatus) {
-      case "Settled":
+    switch (rowData.DocumentStatus) {
+      case "Claimed":
         return "success";
-      case "Scheduled":
+      case "Printing":
         return "warning";
-      case "Active":
+      case "For Printing":
         return "danger";
       default:
         return null;
@@ -491,14 +481,12 @@ const Incidents: React.FC = () => {
 
   const getBackgroundColor = () => {
     switch (selectedOptionDocumentStatus) {
-      case "Active":
+      case "For Printing":
         return "#EF4444";
-      case "Scheduled":
+      case "Printing":
         return "#F59E0B";
-      case "Settled":
+      case "Claimed":
         return "#22C55E";
-      default:
-        return "#EF4444";
     }
   };
 
@@ -508,15 +496,14 @@ const Incidents: React.FC = () => {
 
     await axios
       .put(
-        api_url + "incidents",
+        api_url + "bdrrmc",
         {
           ID: parseInt(UpdateformData.ID),
-          CompliantFullName: UpdateformData.CompliantFullName,
-          Respondent: UpdateformData.Respondent,
-          IncidentStatus: selectedOptionDocumentStatus,
-          IncidentDateTime: formatedValidityDate,
-          IncidentLocation: UpdateformData.IncidentLocation,
-          IncidentNarration: UpdateformData.IncidentNarration,
+          TypeOfRecord: selectedOptionCategory,
+          PartiesInvolved: UpdateformData.PartiesInvolved,
+          DateTime: formatedValidityDate,
+          Location: UpdateformData.Location,
+          RecordDetails: UpdateformData.RecordDetails,
           IssuingOfficer: UpdateformData.IssuingOfficer,
         },
         {
@@ -531,7 +518,7 @@ const Incidents: React.FC = () => {
           resetUpdateForm();
           showSuccessFul();
           await axios
-            .get(api_url + "incidents")
+            .get(api_url + "bdrrmc")
             .then((response) => setResidents(response.data));
         } else {
           setUserError(response.data.Message || "An error occurred");
@@ -548,15 +535,14 @@ const Incidents: React.FC = () => {
 
     await axios
       .post(
-        api_url + "incidents",
+        api_url + "bdrrmc",
         {
           ID: parseInt(UpdateformData.ID),
-          CompliantFullName: UpdateformData.CompliantFullName,
-          Respondent: UpdateformData.Respondent,
-          IncidentStatus: selectedOptionDocumentStatus,
-          IncidentDateTime: formatedValidityDate,
-          IncidentLocation: UpdateformData.IncidentLocation,
-          IncidentNarration: UpdateformData.IncidentNarration,
+          TypeOfRecord: selectedOptionCategory,
+          PartiesInvolved: UpdateformData.PartiesInvolved,
+          DateTime: formatedValidityDate,
+          Location: UpdateformData.Location,
+          RecordDetails: UpdateformData.RecordDetails,
           IssuingOfficer: FullName,
         },
         {
@@ -571,7 +557,7 @@ const Incidents: React.FC = () => {
           resetUpdateForm();
           showSuccessFul();
           await axios
-            .get(api_url + "incidents")
+            .get(api_url + "bdrrmc")
             .then((response) => setResidents(response.data));
         } else {
           setUserError(response.data.Message || "An error occurred");
@@ -599,7 +585,7 @@ const Incidents: React.FC = () => {
   return (
     <div className="px-8 py-4">
       <h1 className="text-4xl font-black pt-4 text-red-900 tracking-[-0.5px] pb-2 ">
-        Incident Reports
+        Blotter Records
       </h1>
       <Breadcrumbs aria-label="breadcrumb">
         <Link
@@ -614,7 +600,7 @@ const Incidents: React.FC = () => {
           sx={{ display: "flex", alignItems: "center" }}
           color="text.primary"
         >
-          Incident Reports
+          Blotter Records
         </Typography>
       </Breadcrumbs>
       <div className="flex justify-content-between gap-5 pb-4 pt-4">
@@ -666,22 +652,13 @@ const Incidents: React.FC = () => {
         onRowSelect={onRowSelect}
         metaKeySelection={false}
       >
-        <Column field="IncidentDateTime" header="Date Filed" sortable></Column>
-        <Column
-          field="CompliantFullName"
-          header="Complainant"
-          sortable
-        ></Column>
-        <Column field="Respondent" header="Respondent" sortable></Column>
+        <Column field="ID" header="Case ID" sortable></Column>
+        <Column field="DateTime" header="Date Filed" sortable></Column>
+        <Column field="TypeOfRecord" header="Type of Record" sortable></Column>
+        <Column field="Location" header="Location" sortable></Column>
         <Column
           field="IssuingOfficer"
           header="Issuing Officer"
-          sortable
-        ></Column>
-        <Column
-          body={actionStatusTemplate}
-          header="Status"
-          style={{ minWidth: "8rem" }}
           sortable
         ></Column>
         <Column
@@ -713,7 +690,7 @@ const Incidents: React.FC = () => {
 
       <div className="card flex justify-content-center">
         <Dialog
-          header={modalState + " Incident Report"}
+          header={modalState + " BDRRMC Record"}
           visible={visible}
           style={{ width: "50vw" }}
           onHide={() => {
@@ -747,31 +724,41 @@ const Incidents: React.FC = () => {
             <div className="flex gap-4 pb-2">
               <div className="pb-2 flex flex-col grow">
                 <label
-                  htmlFor="CompliantFullName"
+                  htmlFor="PhilhealthCategory"
                   className="pb-2 col-form-label"
                 >
-                  Complainant Full Name <span className="text-red-500">*</span>
+                  Type of Record: <span className="text-red-500">*</span>
                 </label>
-                <input
-                  type="text"
+                <select
+                  id="category"
                   className="p-2 mt-[-2px] rounded-md border-2 border-grey"
-                  id="CompliantFullName"
-                  name="CompliantFullName"
-                  value={UpdateformData.CompliantFullName}
-                  onChange={handleInputChange}
                   disabled={isFormDisabled}
-                ></input>
+                  name="category"
+                  value={selectedOptionCategory}
+                  onChange={handleSelectChangeCategory}
+                >
+                  <option value="">Please Select one..</option>
+                  <option value="Disaster">Disaster</option>
+                  <option value="Traffic">Traffic</option>
+                  <option value="Fire">Fire</option>
+                  <option value="Others">
+                    Others (please specify on record details)
+                  </option>
+                </select>
               </div>
               <div className="pb-2 flex flex-col grow">
-                <label htmlFor="Respondent" className="pb-2 col-form-label">
-                  Respondent:
+                <label
+                  htmlFor="PartiesInvolved"
+                  className="pb-2 col-form-label"
+                >
+                  Party/ies involved:
                 </label>
                 <input
                   type="text"
                   className="p-2 mt-[-2px] rounded-md border-2 border-grey"
-                  id="Respondent"
-                  name="Respondent"
-                  value={UpdateformData.Respondent}
+                  id="PartiesInvolved"
+                  name="PartiesInvolved"
+                  value={UpdateformData.PartiesInvolved}
                   onChange={handleInputChange}
                   disabled={isFormDisabled}
                 ></input>
@@ -780,37 +767,15 @@ const Incidents: React.FC = () => {
 
             <div className="grid grid-cols-3 grid-rows-1 gap-4">
               <div
-                className="grid grid-cols-1 grid-rows-4 gap-4"
+                className="grid grid-cols-1 grid-rows-3 gap-4"
                 style={{ maxWidth: "300px" }}
               >
                 <div className="flex flex-col">
                   <label
                     className="pb-2 col-form-label"
-                    htmlFor="IncidentStatus"
-                  >
-                    Incident Status <span className="text-red-500">*</span>
-                  </label>
-                  <select
-                    id="IncidentStatus"
-                    className="p-2 mt-[-2px] rounded-md border-5 w-60 text-white border-solid border-black w-full"
-                    name="IncidentStatus"
-                    value={selectedOptionDocumentStatus}
-                    onChange={handleSelectChangeDocumentStatus}
-                    style={{ backgroundColor: getBackgroundColor() }}
-                    disabled={isFormDisabled}
-                  >
-                    <option value="Active">Active</option>
-                    <option value="Settled">Settled</option>
-                    <option value="Scheduled">Scheduled</option>
-                  </select>
-                </div>
-                <div className="flex flex-col">
-                  <label
-                    className="pb-2 col-form-label"
                     htmlFor="DocumentValidity"
                   >
-                    Date and Time of Incident{" "}
-                    <span className="text-red-500">*</span>
+                    Date and Time <span className="text-red-500">*</span>
                   </label>
                   <DatePicker
                     name="DocumentValidity"
@@ -827,35 +792,32 @@ const Incidents: React.FC = () => {
                   />
                 </div>
                 <div className="pb-2 flex flex-col row-span-2 ">
-                  <label
-                    htmlFor="IncidentLocation"
-                    className="pb-2 col-form-label"
-                  >
-                    Incident Location <span className="text-red-500">*</span>
+                  <label htmlFor="Location" className="pb-2 col-form-label">
+                    Location <span className="text-red-500">*</span>
                   </label>
                   <textarea
                     className="rounded-md  border-2 border-grey"
-                    name="IncidentLocation"
-                    id="IncidentLocation"
+                    name="Location"
+                    id="Location"
                     cols={12}
                     rows={5}
-                    value={UpdateformData.IncidentLocation}
+                    value={UpdateformData.Location}
                     onChange={handleInputChange}
                     disabled={isFormDisabled}
                   ></textarea>
                 </div>
               </div>
               <div className="flex flex-col col-span-2">
-                <label htmlFor="IncidentNarration">
-                  Incident Narration<span className="text-red-500">*</span>
+                <label htmlFor="RecordDetails">
+                  Record Details<span className="text-red-500">*</span>
                 </label>
                 <textarea
                   className="rounded-md  border-2 border-grey"
-                  name="IncidentNarration"
-                  id="IncidentNarration"
+                  name="RecordDetails"
+                  id="RecordDetails"
                   cols={120}
-                  rows={13}
-                  value={UpdateformData.IncidentNarration}
+                  rows={9}
+                  value={UpdateformData.RecordDetails}
                   onChange={handleInputChange}
                   disabled={isFormDisabled}
                 ></textarea>
@@ -870,4 +832,4 @@ const Incidents: React.FC = () => {
   );
 };
 
-export default withLoading(Incidents);
+export default withLoading(Bdrrmc);

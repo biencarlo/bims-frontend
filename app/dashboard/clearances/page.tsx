@@ -709,7 +709,6 @@ const Clearances: React.FC = () => {
         onRowSelect={onRowSelect}
         metaKeySelection={false}
       >
-        <Column field="ID" header="Clearance File ID" sortable></Column>
         <Column field="DateCreated" header="Date Created" sortable></Column>
         <Column field="ResidentLastName" header="Last Name" sortable></Column>
         <Column field="ResidentFirstName" header="First Name" sortable></Column>

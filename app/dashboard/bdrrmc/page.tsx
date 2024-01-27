@@ -652,7 +652,6 @@ const Bdrrmc: React.FC = () => {
         onRowSelect={onRowSelect}
         metaKeySelection={false}
       >
-        <Column field="ID" header="Case ID" sortable></Column>
         <Column field="DateTime" header="Date Filed" sortable></Column>
         <Column field="TypeOfRecord" header="Type of Record" sortable></Column>
         <Column field="Location" header="Location" sortable></Column>

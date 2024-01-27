@@ -8,7 +8,7 @@ export default function layout({ children }: Props) {
   return (
     <div className="">
       <Sidebar />
-      <main className="pl-72">{children}</main>
+      <main className="pl-80">{children}</main>
     </div>
   );
 }

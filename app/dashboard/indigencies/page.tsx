@@ -706,7 +706,6 @@ const Indigencies: React.FC = () => {
         onRowSelect={onRowSelect}
         metaKeySelection={false}
       >
-        <Column field="ID" header="ID" sortable></Column>
         <Column field="DateCreated" header="Date Created" sortable></Column>
         <Column
           field="ResidentData.LastName"

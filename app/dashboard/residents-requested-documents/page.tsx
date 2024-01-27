@@ -821,7 +821,6 @@ const ResidentsList: React.FC = () => {
         onRowSelect={onRowSelect}
         metaKeySelection={false}
       >
-        <Column field="ID" header="ID" sortable></Column>
         <Column field="DateCreated" header="Date Created" sortable></Column>
         <Column field="DateUpdated" header="Date Updated" sortable></Column>
         <Column field="DocumentType" header="DocumentType" sortable></Column>

@@ -628,11 +628,7 @@ const Dashboard: React.FC = () => {
           Processed Records History
         </h1>
         <div className="card bg-white rounded-lg">
-          {GetDataChart ? (
-            <Chart type="line" data={chartData} options={chartOptions} />
-          ) : (
-            <p>Loading chart data...</p>
-          )}
+          <Chart type="line" data={chartData} options={chartOptions} />
         </div>
       </div>
     </div>

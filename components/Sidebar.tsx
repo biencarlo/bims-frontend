@@ -13,6 +13,7 @@ import {
   SettingsIcon,
   AlertTriangle,
   BadgeAlert,
+  MessageCircleWarning,
 } from "lucide-react";
 import layout from "@/app/dashboard/layout";
 import SidebarItems from "./SidebarItems";
@@ -114,6 +115,12 @@ export default function Sidebar() {
       current: `/${segment}` === "/incidents",
     },
     {
+      icon: <MessageCircleWarning />,
+      name: "Blotter Records",
+      href: "/dashboard/blotter",
+      current: `/${segment}` === "/blotter",
+    },
+    {
       icon: <List />,
       name: "Document Logs",
       href: "/dashboard/residents-requested-documents",
@@ -174,6 +181,12 @@ export default function Sidebar() {
       current: `/${segment}` === "/incidents",
     },
     {
+      icon: <MessageCircleWarning />,
+      name: "Blotter Records",
+      href: "/dashboard/blotter",
+      current: `/${segment}` === "/blotter",
+    },
+    {
       icon: <List />,
       name: "Document Logs",
       href: "/dashboard/residents-requested-documents",
@@ -183,7 +196,7 @@ export default function Sidebar() {
   ];
 
   return (
-    <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-72 lg:flex-col bg-red-900">
+    <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-80 lg:flex-col bg-red-900">
       <div className="flex grow flex-col gap-y-5 overflow-y-auto  px-6 pb-4 border-r-2">
         <div className="flex h-16 shrink-0 items-center gap-4 mt-5 border border-white rounded-md py-9 px-4">
           <Image src={"/sj-logo.png"} height={55} width={55} alt="sjLogo" />
@@ -208,7 +221,7 @@ export default function Sidebar() {
           </ul>
         </nav>
 
-        <div className="flex items-center gap-4 px-5">
+        <div className="flex items-center justify-between gap-4 px-5">
           <div
             className="aspect-square w-10 rounded-full"
             style={{ position: "relative" }}
@@ -220,10 +233,13 @@ export default function Sidebar() {
             />
           </div>
           <h1 className="pr-10 text-white">{UserName}</h1>
+          <div className="p-2 hover:bg-[#bc6666] transition-all rounded-lg ">
           <SettingsIcon
             onClick={handleSettings}
             style={{ cursor: "pointer", color: "white" }}
           />
+          </div>
+          
         </div>
 
         <button
@@ -243,7 +259,7 @@ export default function Sidebar() {
           </div>
         </button>
         <div className="">
-          <p className="text-red-300 text-xs hover:text-lg hover:underline hover:text-gray-50 hover:font-black transition-all">Build 0.3 ALPHA</p>
+          <p className="text-red-300 text-xs hover:text-lg hover:underline hover:text-gray-50 hover:font-black transition-all">Build 0.3.1 ALPHA</p>
         </div>
         <div className="">
           <p className="text-red-300 text-xs hover:text-sm transition-all hover:text-gray-50 hover:font-black">
