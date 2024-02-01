@@ -552,7 +552,10 @@ const Dashboard: React.FC = () => {
               </div>
             </div>
           </div>
-          <div className="col-span-2 row-span-1 col-start-5 row-start-1 py-4 px-4  bg-white rounded-lg border-black  ">
+          <div onClick={() => {
+              window.open("dashboard/incidents", "_blank");
+            }}
+            className="col-span-2 row-span-1 col-start-5 row-start-1 py-4 px-4  bg-white rounded-lg border-black cursor-pointer">
             <div className="grid grid-cols-3 grid-rows-2 gap-4">
               <div className="row-span-2 col-span-1">
                 <BadgeAlert className="p-5 w-full h-full bg-red-900 rounded-lg text-white border-black  "></BadgeAlert>
@@ -569,7 +572,10 @@ const Dashboard: React.FC = () => {
               </div>
             </div>
           </div>
-          <div className="col-span-2 row-span-1 col-start-5 row-start-2 py-4 px-4  bg-red-900 rounded-lg border-black  ">
+          <div onClick={() => {
+              window.open("dashboard/residents-requested-documents", "_blank");
+            }}
+            className="col-span-2 row-span-1 col-start-5 row-start-2 py-4 px-4  bg-red-900 rounded-lg border-black cursor-pointer">
             <div className="grid grid-cols-3 grid-rows-2 gap-4">
               <div className="row-span-2 col-span-1">
                 <LineChart className="p-5 w-full h-full bg-white rounded-lg text-red-900 border-black  "></LineChart>
