@@ -164,6 +164,7 @@ const Bdrrmc: React.FC = () => {
   const [globalFilterValue, setGlobalFilterValue] = useState("");
 
   useEffect(() => {
+    document.title = "BATIS e-Nexus - BDRRMC Records";
     var getclearance = async () => {
       await axios
         .get(api_url + "bdrrmc")

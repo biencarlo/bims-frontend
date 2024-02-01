@@ -1,5 +1,10 @@
 import Login from "@/components/Login";
 import Image from "next/image";
+// import React, { useEffect } from "react";
+
+// useEffect(() => {
+//   document.title = "BATIS e-Nexus - Login";
+// }, []);
 export default function page() {
 
   return (

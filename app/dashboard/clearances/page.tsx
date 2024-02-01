@@ -147,6 +147,7 @@ const Clearances: React.FC = () => {
   const [ProfileLink, setProfileLink] = useState<string | null>(null);
 
   useEffect(() => {
+    document.title = "BATIS e-Nexus - Clearance Records";
     setUserID(localStorage.getItem("ID"));
     setFullName(localStorage.getItem("fullName"));
     setIsAdmin(localStorage.getItem("isAdmin"));

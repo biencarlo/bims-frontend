@@ -70,6 +70,7 @@ const UserList: React.FC = () => {
   const [UserName, setUserName] = useState<string | null>(null);
 
   useEffect(() => {
+    document.title = "BATIS e-Nexus - User List";
     setUserName(localStorage.getItem("Username"));
     setUserID(localStorage.getItem("ID"));
     setFullName(localStorage.getItem("fullName"));

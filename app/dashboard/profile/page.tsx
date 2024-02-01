@@ -46,6 +46,7 @@ const Profile: React.FC = () => {
   const [UserName, setUserName] = useState<string | null>(null);
 
   useEffect(() => {
+    document.title = "BATIS e-Nexus - Change Profile Password";
     setUserName(localStorage.getItem("Username"));
     setUserID(localStorage.getItem("ID"));
     setFullName(localStorage.getItem("fullName"));

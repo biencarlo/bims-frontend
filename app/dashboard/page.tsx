@@ -13,6 +13,7 @@ import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { faRefresh } from "@fortawesome/free-solid-svg-icons";
 import withLoading from "../../components/withLoading";
 
+
 import {
   LayoutGrid,
   FilePlus,
@@ -178,7 +179,9 @@ const Dashboard: React.FC = () => {
 
   const [formattedDateTime, setFormattedDateTime] = useState("");
 
+
   useEffect(() => {
+    document.title = "BATIS e-Nexus - Dashboard";
     const formatDate = () => {
       const options = {
         year: "numeric",
@@ -410,6 +413,7 @@ const Dashboard: React.FC = () => {
   }
 
   return (
+    
     <div className="px-8 py-8 h-screen">
       <div className="flex bg-blue-950 text-white py-5 px-7 rounded-t-[12px] gap-3">
         <div className="aspect-square relative w-full max-w-[60px]">
@@ -462,9 +466,14 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
         <div className="grid grid-cols-13 gap-4">
-          <div className="col-span-2 row-span-1 py-4 px-4  bg-white rounded-lg">
+          <div
+            onClick={() => {
+              window.open("dashboard/clearances", "_blank");
+            }}
+            className="col-span-2 row-span-1 py-4 px-4  bg-white rounded-lg cursor-pointer"
+          >
             <div className="grid grid-cols-3 grid-rows-2 gap-4">
-              <div className="col-span-1 row-span-2 ">
+              <div className="col-span-1 row-span-2">
                 <FileText className="p-5 w-full h-full bg-red-900 rounded-lg text-white border-black"></FileText>
               </div>
               <div className="col-span-2">
@@ -479,7 +488,12 @@ const Dashboard: React.FC = () => {
               </div>
             </div>
           </div>
-          <div className="col-span-2 row-span-1 col-start-1 row-start-2 p-4 bg-white rounded-lg border-black  ">
+          <div
+            onClick={() => {
+              window.open("dashboard/indigencies", "_blank");
+            }}
+            className="col-span-2 row-span-1 col-start-1 row-start-2 p-4 bg-white rounded-lg border-black cursor-pointer "
+          >
             <div className="grid grid-cols-3 grid-rows-2 gap-4">
               <div className="col-span-1 row-span-2">
                 <MapPin className="p-5 w-full h-full bg-red-900 rounded-lg text-white border-black  "></MapPin>
@@ -496,7 +510,12 @@ const Dashboard: React.FC = () => {
               </div>
             </div>
           </div>
-          <div className="col-span-2 row-span-1 col-start-3 row-start-1 p-4 bg-white rounded-lg border-black">
+          <div
+            onClick={() => {
+              window.open("dashboard/hc-referrals", "_blank");
+            }}
+            className="col-span-2 row-span-1 col-start-3 row-start-1 p-4 bg-white rounded-lg border-black cursor-pointer"
+          >
             <div className="grid grid-cols-3 grid-rows-2 gap-4">
               <div className="col-span-1 row-span-2">
                 <Cross className="p-5 w-full h-full bg-red-900 rounded-lg text-white border-black  "></Cross>
@@ -513,7 +532,12 @@ const Dashboard: React.FC = () => {
               </div>
             </div>
           </div>
-          <div className="col-span-2 row-span-1 col-start-3 row-start-2 p-4 bg-white rounded-lg border-black">
+          <div
+            onClick={() => {
+              window.open("dashboard/bdrrmc", "_blank");
+            }}
+            className="col-span-2 row-span-1 col-start-3 row-start-2 p-4 bg-white rounded-lg border-black cursor-pointer"
+          >
             <div className="grid grid-cols-3 grid-rows-2 gap-4">
               <div className="col-span-1 row-span-2">
                 <AlertTriangle className="p-5 w-full h-full bg-red-900 rounded-lg text-white border-black  "></AlertTriangle>

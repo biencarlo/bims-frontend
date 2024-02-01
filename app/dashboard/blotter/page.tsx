@@ -3,6 +3,7 @@ import Typography from "@mui/material/Typography";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Link from "@mui/material/Link";
 
+import { Construction } from "lucide-react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import React, { useState, useEffect, useRef, ChangeEvent } from "react";
@@ -144,6 +145,7 @@ const Bdrrmc: React.FC = () => {
   const [ProfileLink, setProfileLink] = useState<string | null>(null);
 
   useEffect(() => {
+    document.title = "BATIS e-Nexus - Blotter Records";
     setUserID(localStorage.getItem("ID"));
     setFullName(localStorage.getItem("fullName"));
     setIsAdmin(localStorage.getItem("isAdmin"));
@@ -635,199 +637,15 @@ const Bdrrmc: React.FC = () => {
           Export .csv file
         </button>
       </div>
-      <DataTable
-        filters={filters}
-        value={residents}
-        size="small"
-        removableSort
-        stripedRows
-        paginator
-        rows={10}
-        rowsPerPageOptions={[5, 10, 25, 50]}
-        tableStyle={{ minWidth: "50rem" }}
-        selectionMode="single"
-        selection={selectedProduct}
-        onSelectionChange={(e) => setSelectedProduct(e.ID)}
-        dataKey="ID"
-        onRowSelect={onRowSelect}
-        metaKeySelection={false}
-      >
-        <Column field="ID" header="Case ID" sortable></Column>
-        <Column field="DateTime" header="Date Filed" sortable></Column>
-        <Column field="TypeOfRecord" header="Type of Record" sortable></Column>
-        <Column field="Location" header="Location" sortable></Column>
-        <Column
-          field="IssuingOfficer"
-          header="Issuing Officer"
-          sortable
-        ></Column>
-        <Column
-          body={actionBodyTemplate}
-          exportable={false}
-          style={{ minWidth: "20rem" }}
-        ></Column>
-      </DataTable>
-
-      <Dialog
-        visible={deleteResidentDialog}
-        style={{ width: "32rem" }}
-        breakpoints={{ "960px": "75vw", "641px": "90vw" }}
-        header="Confirm"
-        modal
-        footer={deleteUserDialogFooter}
-        onHide={hideDeleteUserDialog}
-      >
-        <div className="confirmation-content">
-          <i
-            className="pi pi-exclamation-triangle mr-3"
-            style={{ fontSize: "2rem" }}
-          />
-          {residents && (
-            <span>Are you sure you want to archive this record ?</span>
-          )}
+      <div className="mt-20 items-center content-center self-center place-self-center">
+        <div className=" flex flex-col items-center content-center self-center place-self-center">
+        <Construction className="p-5 w-50 h-50 bg-red-900 rounded-lg text-white border-black  ">  </Construction>
+        <p className="font-bold text-3xl">
+          Page under Construction
+        </p>
         </div>
-      </Dialog>
 
-      <div className="card flex justify-content-center">
-        <Dialog
-          header={modalState + " BDRRMC Record"}
-          visible={visible}
-          style={{ width: "50vw" }}
-          onHide={() => {
-            setVisible(false);
-            setIsFormDisabled(false);
-            resetUpdateForm();
-            setSelectedOptionCategory("");
-          }}
-          footer={footerContent}
-          position="top"
-        >
-          {UserError && (
-            <div role="alert" className="login-error">
-              <div className="bg-red-500 text-white font-bold rounded-t px-4 py-2">
-                Error:
-              </div>
-              <div className="border border-t-0 border-red-400 rounded-b bg-red-100 px-4 py-3 text-red-700">
-                <p className="error-message">{UserError}</p>
-              </div>
-            </div>
-          )}
-
-          <div className="border-t-2 border-black pb-2"></div>
-          <form className="flex flex-col my-4 gap-2">
-            <input
-              type="hidden"
-              id="userID"
-              value={UpdateformData.ID}
-              onChange={handleInputChange}
-            ></input>
-            <div className="flex gap-4 pb-2">
-              <div className="pb-2 flex flex-col grow">
-                <label
-                  htmlFor="PhilhealthCategory"
-                  className="pb-2 col-form-label"
-                >
-                  Type of Record: <span className="text-red-500">*</span>
-                </label>
-                <select
-                  id="category"
-                  className="p-2 mt-[-2px] rounded-md border-2 border-grey"
-                  disabled={isFormDisabled}
-                  name="category"
-                  value={selectedOptionCategory}
-                  onChange={handleSelectChangeCategory}
-                >
-                  <option value="">Please Select one..</option>
-                  <option value="Disaster">Disaster</option>
-                  <option value="Traffic">Traffic</option>
-                  <option value="Fire">Fire</option>
-                  <option value="Others">
-                    Others (please specify on record details)
-                  </option>
-                </select>
-              </div>
-              <div className="pb-2 flex flex-col grow">
-                <label
-                  htmlFor="PartiesInvolved"
-                  className="pb-2 col-form-label"
-                >
-                  Party/ies involved:
-                </label>
-                <input
-                  type="text"
-                  className="p-2 mt-[-2px] rounded-md border-2 border-grey"
-                  id="PartiesInvolved"
-                  name="PartiesInvolved"
-                  value={UpdateformData.PartiesInvolved}
-                  onChange={handleInputChange}
-                  disabled={isFormDisabled}
-                ></input>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-3 grid-rows-1 gap-4">
-              <div
-                className="grid grid-cols-1 grid-rows-3 gap-4"
-                style={{ maxWidth: "300px" }}
-              >
-                <div className="flex flex-col">
-                  <label
-                    className="pb-2 col-form-label"
-                    htmlFor="DocumentValidity"
-                  >
-                    Date and Time <span className="text-red-500">*</span>
-                  </label>
-                  <DatePicker
-                    name="DocumentValidity"
-                    id="DocumentValidity"
-                    selected={selectedDateValidity}
-                    onChange={handleDateChangeValidity}
-                    dateFormat="MM/dd/yyyy"
-                    className="p-2 mt-[-2px] rounded-md border-2 border-grey"
-                    customInput={<CustomInputValidity />}
-                    showYearDropdown
-                    scrollableYearDropdown
-                    yearDropdownItemNumber={50}
-                    disabled={isFormDisabled}
-                  />
-                </div>
-                <div className="pb-2 flex flex-col row-span-2 ">
-                  <label htmlFor="Location" className="pb-2 col-form-label">
-                    Location <span className="text-red-500">*</span>
-                  </label>
-                  <textarea
-                    className="rounded-md  border-2 border-grey"
-                    name="Location"
-                    id="Location"
-                    cols={12}
-                    rows={5}
-                    value={UpdateformData.Location}
-                    onChange={handleInputChange}
-                    disabled={isFormDisabled}
-                  ></textarea>
-                </div>
-              </div>
-              <div className="flex flex-col col-span-2">
-                <label htmlFor="RecordDetails">
-                  Record Details<span className="text-red-500">*</span>
-                </label>
-                <textarea
-                  className="rounded-md  border-2 border-grey"
-                  name="RecordDetails"
-                  id="RecordDetails"
-                  cols={120}
-                  rows={9}
-                  value={UpdateformData.RecordDetails}
-                  onChange={handleInputChange}
-                  disabled={isFormDisabled}
-                ></textarea>
-              </div>
-            </div>
-          </form>
-        </Dialog>
       </div>
-
-      <Toast ref={toast} />
     </div>
   );
 };
